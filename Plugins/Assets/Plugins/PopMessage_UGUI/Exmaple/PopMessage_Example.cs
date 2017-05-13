@@ -14,16 +14,19 @@ public class PopMessage_Example : MonoBehaviour {
 			PopMessage.ConfirmMessage ("Title", "123");
 		}
 		if (Input.GetKeyDown (KeyCode.S)) {
-//			PopMessage.ConfirmMessage ("1","2", "A", this.gameObject);
 			PopMessage.YesNoMessage("title", "5678", C, B);
 		}
 
 		if (Input.GetKeyDown (KeyCode.D)) {
-			PopMessage.YesNoMessage("title", "1234", B, C);
-//			PopMessage.ConfirmMessage ("3","4");
-		}
-		if (Input.GetKeyDown (KeyCode.F)) {
 			PopMessage.ConfirmMessage ("Title", "123", A);
+		}
+
+		if (Input.GetKeyDown (KeyCode.F)) {
+			PopMessage.OpenLoading ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.G)) {
+			PopMessage.CloseLoading ();
 		}
 	}
 

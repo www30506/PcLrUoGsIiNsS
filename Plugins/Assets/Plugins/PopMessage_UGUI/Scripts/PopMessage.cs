@@ -5,6 +5,11 @@ using UnityEngine.UI;
 public class PopMessage : MonoBehaviour {
 	public static PopMessage instance;
 	[System.Serializable]
+	public class PopMessageLoading{
+		public GameObject Obj;
+	}
+
+	[System.Serializable]
 	public class PopMessageConfirm{
 		public GameObject Obj;
 		public Text title;
@@ -20,9 +25,9 @@ public class PopMessage : MonoBehaviour {
 		public NoCallBack noCallBack;
 	}
 
-
-	public PopMessageConfirm confirm;
-	public PopMessageYesNo yesNo;
+	[SerializeField]private PopMessageConfirm confirm;
+	[SerializeField]private PopMessageYesNo yesNo;
+	[SerializeField]private PopMessageLoading loading;
 
 	void Start () {
 		CheckEventSystemExist ();
@@ -36,19 +41,30 @@ public class PopMessage : MonoBehaviour {
 		instance  = (Instantiate(Resources.Load("Plugins/PopMessage/PopMessageCanvas")) as GameObject).GetComponent<PopMessage>();
 	}
 
-	public void PopMessageInit(){
-		confirm = new PopMessageConfirm ();
-		confirm.Obj = this.gameObject.transform.Find ("ConfirmMessage").gameObject;
-		confirm.description = confirm.Obj.transform.Find ("Descript").GetComponent<Text> ();
-		confirm.title = confirm.Obj.transform.Find ("TitleText").GetComponent<Text> ();
-
-
-		yesNo = new PopMessageYesNo ();
-		yesNo.Obj = this.gameObject.transform.Find ("YesNoMessage").gameObject;
-		yesNo.title = yesNo.Obj.transform.Find ("TitleText").GetComponent<Text> ();
-		yesNo.description = yesNo.Obj.transform.Find ("Descript").GetComponent<Text> ();
+	/********************************************************
+	 * 						Loading視窗
+	 * ******************************************************/
+	public static void OpenLoading(){
+		if (instance == null) {
+			CreatePopMessage ();
+		}
+		instance.M_OpenLoading ();
 	}
 
+	public void M_OpenLoading(){
+		loading.Obj.SetActive (true);
+	}
+
+	public static void CloseLoading(){
+		if (instance == null) {
+			CreatePopMessage ();
+		}
+		instance.M_CloseLoading ();
+	}
+
+	public void M_CloseLoading(){
+		loading.Obj.SetActive (false);
+	}
 
 	/********************************************************
 	 * 						確認視窗
@@ -60,7 +76,6 @@ public class PopMessage : MonoBehaviour {
 	public static void ConfirmMessage(string p_Title, string p_Text, ConfirmCallBack p_confirmCallBack){
 		if (instance == null) {
 			CreatePopMessage ();
-			instance.PopMessageInit ();
 		}
 		instance.M_ConfirmMessage (p_Title, p_Text, p_confirmCallBack);
 	}
@@ -91,7 +106,6 @@ public class PopMessage : MonoBehaviour {
 	public static void YesNoMessage(string p_Title, string p_descript, YesCallBack p_yesCallBack, NoCallBack p_noCallBack){
 		if (instance == null) {
 			CreatePopMessage ();
-			instance.PopMessageInit ();
 		}
 		instance.M_YesNoMessage(p_Title, p_descript, p_yesCallBack, p_noCallBack);
 	}
