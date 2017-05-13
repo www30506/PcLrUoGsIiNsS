@@ -1,0 +1,6 @@
+使用方法 : 
+
+在有Grid Layout Group 底下的Image物件掛上DragExchangeImage
+就能 用拖曳的方式去改變 Image的排列
+
+PS: Lock變數可以鎖定該座標不會移動
