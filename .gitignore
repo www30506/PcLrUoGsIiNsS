@@ -1,0 +1,5 @@
+Plugins/Library/
+Plugins/Temp/
+*.csproj
+*.sln
+*.userprefs
