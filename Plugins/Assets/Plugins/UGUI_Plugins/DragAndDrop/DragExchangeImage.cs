@@ -94,8 +94,6 @@ public class DragExchangeImage : MonoBehaviour {
 	 * 						OnUp
 	 * *******************************************************/
 	public void OnUp(BaseEventData p){
-		RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition,-Vector2.up);
-
 		thisTransform.SetParent (grid.transform, true);
 		thisTransform.SetSiblingIndex(tempObj.transform.GetSiblingIndex());
 
