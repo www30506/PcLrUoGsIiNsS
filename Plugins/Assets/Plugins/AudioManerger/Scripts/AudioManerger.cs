@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BackgroundMusicType{First};
-public enum SoundEffectType{First};
+public enum MusicType{Music_Example};
+public enum SoundEffectType{Effect_Example};
 
 public class AudioManerger : MonoBehaviour {
 	public static AudioManerger instance;
-	AudioSource music;
-	AudioSource soundEffect;
+	[SerializeField]private AudioSource muisc;
+	[SerializeField]private AudioSource effect;
 
 	void Awake(){
 		instance = this;
-		music = GameObject.Find ("Main Camera/BackgroundMusic").GetComponent<AudioSource>();
-		soundEffect = GameObject.Find ("Main Camera/SoundEffect").GetComponent<AudioSource>();
 	}
 		
 	void Start () {
@@ -24,39 +22,81 @@ public class AudioManerger : MonoBehaviour {
 		
 	}
 
+	private static void CreateAudioManerger(){
+		Instantiate (Resources.Load ("Plugins/AudioManerger/AudioManerger") as GameObject);
+	}
+
+	/// <summary>
+	/// 設定音樂音量
+	/// </summary>
+	public static void SetMusicVoice(float p_voice){
+		if (instance == null) {
+			CreateAudioManerger ();
+		}
+		AudioManerger.instance.M_SetMusicVoice (p_voice);
+	}
+
+	public void M_SetMusicVoice(float p_voice){
+		muisc.volume = p_voice;
+	}
+
+	/// <summary>
+	/// 設定音效音量
+	/// </summary>
+	public static void SetEffiectVoice(float p_voice){
+		if (instance == null) {
+			CreateAudioManerger ();
+		}
+		AudioManerger.instance.M_SetEffiectVoice (p_voice);
+	}
+
+	public void M_SetEffiectVoice(float p_voice){
+		effect.volume = p_voice;
+	}
+
+
 	/// <summary>
 	/// 播放音樂
 	/// </summary>
-	public static void PlayMusic(BackgroundMusicType p_type){
+	public static void PlayMusic(MusicType p_type){
+		if (instance == null) {
+			CreateAudioManerger ();
+		}
 		AudioManerger.instance.M_PlayMusic (p_type);
 	}
 
-	public void M_PlayMusic(BackgroundMusicType p_type){
-		music.clip = Resources.Load ("Sounds/" + p_type.ToString ()) as AudioClip;
-		music.Play ();
+	public void M_PlayMusic(MusicType p_type){
+		muisc.clip = Resources.Load ("Sounds/" + p_type.ToString ()) as AudioClip;
+		muisc.Play ();
 	}
 
 	/// <summary>
 	/// 停止音樂
 	/// </summary>
 	public static void StopMusic(){
+		if (instance == null) {
+			CreateAudioManerger ();
+		}
 		AudioManerger.instance.M_StopMusic();
 	}
 
 	public void M_StopMusic(){
-		music.Stop ();
+		muisc.Stop ();
 	}
 
 	/// <summary>
 	/// 播放音效
 	/// </summary>
 	/// <param name="p_type">P type.</param>
-	public static void PlaySoundEffect(SoundEffectType p_type){
-		AudioManerger.instance.M_PlaySoundEffect (p_type);
+	public static void PlayEffect(SoundEffectType p_type){
+		if (instance == null) {
+			CreateAudioManerger ();
+		}
+		AudioManerger.instance.M_PlayEffect (p_type);
 	}
 
-	public void M_PlaySoundEffect(SoundEffectType p_type){
-		soundEffect.clip = Resources.Load ("Sounds/" + p_type.ToString ()) as AudioClip;
-		soundEffect.Play ();
+	public void M_PlayEffect(SoundEffectType p_type){
+		effect.clip = Resources.Load ("Sounds/" + p_type.ToString ()) as AudioClip;
+		effect.Play ();
 	}
 }
