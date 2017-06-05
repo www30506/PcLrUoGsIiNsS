@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 [AddComponentMenu("UI/Effects/Mekudo", 20)]
 public class Mekudo : MonoBehaviour {
+	[SerializeField]private TextureWrapMode wrapMode = TextureWrapMode.Repeat;
 	[SerializeField]private Vector2 second;
 	private float speed_X;
 	private float speed_Y;
@@ -15,6 +16,7 @@ public class Mekudo : MonoBehaviour {
 	}
 
 	void  Start(){
+		rawImage.texture.wrapMode = wrapMode;
 	}
 	
 	void Update () {
