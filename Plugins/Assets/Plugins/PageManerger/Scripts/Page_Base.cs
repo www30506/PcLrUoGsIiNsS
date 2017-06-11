@@ -32,6 +32,7 @@ public abstract class Page_Base : MonoBehaviour {
 
 		maskObj.SetActive (true);
 		isClosing = true;
+		OnClose ();
 		yield return StartCoroutine (IE_OnClose ());
 		isClosing = false;
 		maskObj.SetActive (false);
