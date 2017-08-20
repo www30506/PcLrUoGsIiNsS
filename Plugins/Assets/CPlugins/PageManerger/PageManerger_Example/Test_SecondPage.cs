@@ -14,24 +14,25 @@ public class Test_SecondPage : Page_Base {
 
 	protected override void OnOpen (){
 
-		print ("Test_MainPage Open");
+		print ("Test_SecondPage Open");
 	}
 
 	protected override IEnumerator IE_OnOpen ()
 	{
+		print ("Test_SecondPage IE_Open");
 		yield return null;
-		print ("Test_MainPage IE_Open");
 	}
 
 	protected override void OnClose (){
 
-		print ("Test_MainPage Close");
+		print ("Test_SecondPage Close");
 	}
 
 	protected override IEnumerator IE_OnClose ()
 	{
+		print ("Test_SecondPage IE_Close");
 		yield return null;
-		print ("Test_MainPage IE_Close");
+
 	}
 
 

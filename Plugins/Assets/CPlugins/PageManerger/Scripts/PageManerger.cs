@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PageType{Test_MainPage, Test_SecondPage};
-
+public enum PageType{Test_MainPage, Test_SecondPage}
 public class PageManerger : MonoBehaviour {
 	
 	[Header("開啟和關閉頁面是否同時執行")]
@@ -16,7 +15,7 @@ public class PageManerger : MonoBehaviour {
 	private bool isWork = false;
 
 	void Awake(){
-		canvas = GameObject.Find ("Canvas").transform;
+		canvas = GameObject.Find ("Pages").transform;
 		instance = this;
 		allPages = canvas.GetComponentsInChildren<Page_Base> ();
 	}
@@ -27,7 +26,7 @@ public class PageManerger : MonoBehaviour {
 	void Update () {
 		
 	}
-
+		
 	/// <summary>
 	/// 切換到目標頁面
 	/// </summary>
@@ -73,7 +72,6 @@ public class PageManerger : MonoBehaviour {
 	IEnumerator OpenTargetPage(PageType p_type){
 		for (int i = 0; i < allPages.Length; i++) {
 			if (allPages [i].gameObject.name == p_type.ToString ()) {
-				allPages [i].gameObject.SetActive (true);
 				allPages [i].GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, 0);
 				allPages [i].Open ();
 
@@ -94,7 +92,6 @@ public class PageManerger : MonoBehaviour {
 					yield return null;
 				}
 
-				allPages [i].gameObject.SetActive (false);
 				break;
 			}
 		}
@@ -110,7 +107,7 @@ public class PageManerger : MonoBehaviour {
 
 	public void M_CloseAllPage(){
 		for (int i = 0; i < allPages.Length; i++) {
-			allPages [i].gameObject.SetActive (false);
+			allPages [i].Close();
 		}
 	}
 
@@ -144,7 +141,7 @@ public class PageManerger : MonoBehaviour {
 		pageList.RemoveAt (pageList.Count - 1);
 		pageTypeList.RemoveAt (pageTypeList.Count - 1);
 
-		if (pageList [pageList.Count-1].gameObject.activeSelf == false) {
+		if (pageList [pageList.Count-1].canvas.enabled == false) {
 			yield return StartCoroutine(OpenTargetPage (pageTypeList [pageTypeList.Count - 1]));
 		}
 

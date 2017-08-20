@@ -19,8 +19,8 @@ public class Test_MainPage : Page_Base {
 
 	protected override IEnumerator IE_OnOpen ()
 	{
-		yield return null;
 		print ("Test_MainPage IE_Open");
+		yield return null;
 	}
 
 	protected override void OnClose (){
@@ -30,12 +30,14 @@ public class Test_MainPage : Page_Base {
 
 	protected override IEnumerator IE_OnClose ()
 	{
-		yield return null;
 		print ("Test_MainPage IE_Close");
+		yield return null;
 	}
 
 
 	public void OnToSecondPage(){
 		PageManerger.ChangePage (PageType.Test_SecondPage);
 	}
+
+
 }

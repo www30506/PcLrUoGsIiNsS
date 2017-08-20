@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Test_Controller : MonoBehaviour {
 	
-	void Start () {
+	IEnumerator Start () {
 		PageManerger.CloseAllPage ();
+		yield return null;
 		PageManerger.ChangePage (PageType.Test_MainPage);
 	}
 	
