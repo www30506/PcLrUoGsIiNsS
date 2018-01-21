@@ -1,0 +1,5 @@
+﻿key	name	des	level	select	type
+name	名稱	敘述	關卡	開關	遊戲總類
+type	label	string	int	toggle	option{1,2,3,4}
+1	遊戲2_1	敘述1_1	10	False	1
+2	遊戲2_2	敘述1_2	11	False	2

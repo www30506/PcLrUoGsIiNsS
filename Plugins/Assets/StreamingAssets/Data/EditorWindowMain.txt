@@ -1,0 +1,6 @@
+﻿key	maintype	secondtype	txtname	txtpath
+1	主選單	測試1	Test_1	Data/Example_EditorWindow_Data
+2	遊戲	遊戲1	Game_1	Data/Example_EditorWindow_Data
+3	遊戲	遊戲3	Game_3	Data/Example_EditorWindow_Data
+4	遊戲	遊戲2	Game_2	Data/Example_EditorWindow_Data
+5	主選單	測試2	Test_2	Data/Example_EditorWindow_Data

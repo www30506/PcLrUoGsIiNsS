@@ -1,0 +1,4 @@
+﻿key	name	des	level	select	type	ddd
+name	名稱	敘述	關卡	開關	遊戲總類	名稱2
+type	label	string	int	toggle	option{1,2,3,4}	string
+1	測試1_1	123s	211	False	2	3
