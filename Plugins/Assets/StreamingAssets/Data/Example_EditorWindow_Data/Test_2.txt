@@ -1,5 +1,5 @@
-﻿key	name	des	level	select	type
-name	名稱	敘述	關卡	開關	遊戲總類
-type	label	string	int	toggle	option{1,2,3,4}
-1	測試1_1	敘述1_1	10	False	2
-2	測試1_2	敘述1_2	111	False	2
+﻿[define]name	名稱	敘述	關卡	開關	遊戲總類
+[define]type	label	string	int	toggle	option{1,2,3,4}
+key	name	des	level	select	type
+1	測試1_1	敘述1_1	2	False	2
+2	測試1_2	敘述1_2	3	False	2
