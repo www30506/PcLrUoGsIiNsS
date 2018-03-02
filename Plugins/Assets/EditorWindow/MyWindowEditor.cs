@@ -131,11 +131,16 @@ public class MyWindowEditor : EditorWindow {
 
 			DestroyImmediate(PD_Obj);
 		}
+
+		EditorStyles.popup.fontSize = 10;
+		EditorStyles.popup.fixedHeight = 15;
 	}
 
 	[MenuItem("Window/MyWindowEditor %#g")]
 	public static void ShowWindow(){
 		MyWindowEditor window = (MyWindowEditor)EditorWindow.GetWindowWithRect(typeof(MyWindowEditor), new Rect(0, 0, MyWindowEditor.WindowWidth, MyWindowEditor.WindowHeigh));
+		EditorStyles.popup.fontSize = 12;
+		EditorStyles.popup.fixedHeight = 30;
 		window.Show();
 	}
 
