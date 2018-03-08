@@ -2,10 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-/// <summary>
-/// Image实现了接口ICanvasRaycastFilter
-/// 该接口有函数IsRaycastLocationValid，返回点击是否有效
-/// </summary>
 [RequireComponent(typeof(PolygonCollider2D))]
 public class PolygonColliderImage : Image {
 
@@ -19,7 +15,6 @@ public class PolygonColliderImage : Image {
 		return ContainsPoint(collider.points,sp);
 	}
 
-	//多边形顶点，屏幕点击坐标
 	bool ContainsPoint (Vector2[] polyPoints, Vector2 p){
 		int j = polyPoints.Length - 1;
 		bool inside = false;
