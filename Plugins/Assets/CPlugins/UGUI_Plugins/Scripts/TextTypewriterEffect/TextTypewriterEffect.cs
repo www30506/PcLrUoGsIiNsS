@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[AddComponentMenu("UI/Other/TextTypewriter")]
 public class TextTypewriterEffect : MonoBehaviour {
 	[Header("每秒幾個字")]
 	[SerializeField]private int wordSpeed = 5;
