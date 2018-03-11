@@ -54,9 +54,7 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	protected virtual IEnumerator IE_OnClose(){
-		if (1 == 2) {
-			yield return null;
-		}
+		yield return null;
 	}
 
 	/// <summary>
@@ -88,8 +86,6 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	protected virtual IEnumerator IE_OnOpen(){
-		if (1 == 2) {
-			yield return null;
-		}
+		yield return null;
 	}
 }
