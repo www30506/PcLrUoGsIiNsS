@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum PageSwitchType{Active, Canvas};
+
 [RequireComponent(typeof(Canvas))]
 [RequireComponent(typeof(CanvasScaler))]
 [RequireComponent(typeof(GraphicRaycaster))]
 public abstract class Page_Base : MonoBehaviour {
 	[HideInInspector]public bool isClosing = false;
 	[HideInInspector]public bool isOpening = false;
-	public Canvas canvas;
+	[HideInInspector]public Canvas canvas;
+
+	public PageSwitchType SwitchType = PageSwitchType.Active;
 	private Vector2 prePosition;
 	private RectTransform m_RectTransform;
 
 	void Awake(){
+		canvas = this.GetComponent<Canvas> ();
 		m_RectTransform = this.GetComponent<RectTransform> ();
 		prePosition = m_RectTransform.anchoredPosition;
 	}
@@ -33,14 +38,9 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	IEnumerator IE_Close(){
-		if (canvas == null) {
-			canvas = this.GetComponent<Canvas> ();
-		}
-
 		isClosing = true;
 		OnClose ();
 		yield return StartCoroutine (IE_OnClose ());
-		canvas.enabled = false;
 		m_RectTransform.anchoredPosition = prePosition;
 		isClosing = false;
 	}
@@ -54,7 +54,8 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	protected virtual IEnumerator IE_OnClose(){
-		yield return null;
+		if(1==2)
+			yield return null;
 	}
 
 	/// <summary>
@@ -66,11 +67,6 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	IEnumerator IE_Open(){
-		if (canvas == null) {
-			canvas = this.GetComponent<Canvas> ();
-		}
-		canvas.enabled = true;
-
 		isOpening = false;
 		OnOpen ();
 		yield return StartCoroutine (IE_OnOpen ());
@@ -86,6 +82,7 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	protected virtual IEnumerator IE_OnOpen(){
-		yield return null;
+		if(1==2)
+			yield return null;
 	}
 }

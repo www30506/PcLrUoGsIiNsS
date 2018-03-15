@@ -6,7 +6,7 @@ public enum PageType{Test_MainPage, Test_SecondPage}
 public class PageManerger : MonoBehaviour {
 	
 	[Header("開啟和關閉頁面是否同時執行")]
-	[SerializeField]private bool isAnimSynchronize = false;
+	[SerializeField]private bool isAnimSynchronize = true;
 	public static PageManerger instance;
 	private List<Page_Base> pageList = new List<Page_Base>(); 
 	[SerializeField]private List<PageType> pageTypeList = new List<PageType> ();
@@ -73,11 +73,19 @@ public class PageManerger : MonoBehaviour {
 		for (int i = 0; i < allPages.Length; i++) {
 			if (allPages [i].gameObject.name == p_type.ToString ()) {
 				allPages [i].GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, 0);
+				if(allPages [i].SwitchType == PageSwitchType.Active){
+					allPages [i].gameObject.SetActive(true);
+				}
+				else if(allPages [i].SwitchType == PageSwitchType.Canvas){
+					allPages [i].canvas.enabled = true;
+				}
+
 				allPages [i].Open ();
 
 				while (allPages [i].isOpening) {
 					yield return null;
 				}
+
 				break;
 			}
 		}
@@ -90,6 +98,13 @@ public class PageManerger : MonoBehaviour {
 
 				while (allPages [i].isClosing) {
 					yield return null;
+				}
+
+				if(allPages [i].SwitchType == PageSwitchType.Active){
+					allPages [i].gameObject.SetActive(false);
+				}
+				else if(allPages [i].SwitchType == PageSwitchType.Canvas){
+					allPages [i].canvas.enabled = false;
 				}
 
 				break;
@@ -108,6 +123,13 @@ public class PageManerger : MonoBehaviour {
 	public void M_CloseAllPage(){
 		for (int i = 0; i < allPages.Length; i++) {
 			allPages [i].Close();
+
+			if(allPages [i].SwitchType == PageSwitchType.Active){
+				allPages [i].gameObject.SetActive(false);
+			}
+			else if(allPages [i].SwitchType == PageSwitchType.Canvas){
+				allPages [i].canvas.enabled = false;
+			}
 		}
 	}
 

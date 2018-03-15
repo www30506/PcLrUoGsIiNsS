@@ -5,7 +5,7 @@ using UnityEngine;
 public class Test_MainPage : Page_Base {
 
 	void Start () {
-		
+//		Debug.logger.logEnabled = false;
 	}
 
 	void Update () {
