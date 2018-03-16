@@ -211,7 +211,8 @@ public class MyWindowEditor : EditorWindow {
 		}
 
 		GUI.EndScrollView();
-
+		
+		//顯示資料
 		scrollPosition = GUI.BeginScrollView(new Rect(20,200,MyWindowEditor.WindowWidth -40 ,MyWindowEditor.WindowHeigh - 320), scrollPosition, new Rect(0,0,_W,_H));
 		for(int i=0; i<secondDataList[_txtnameNumber].Count; i++){
 			for(int j = 0; j<secondDataList[_txtnameNumber][i].Count; j++){
@@ -249,7 +250,38 @@ public class MyWindowEditor : EditorWindow {
 			}
 		}
 
+		//新增資料
+		if(GUI.Button(new Rect(0, (secondDataList[_txtnameNumber].Count)*contentHeigt, MyWindowEditor.WindowWidth, 30), "新增資料")){
+			AddData(_txtnameNumber);
+		}
 		GUI.EndScrollView();
+	}
+
+	private void AddData(int p_txtnameNumber){
+		Dictionary<string, object> _Dictionary = new Dictionary<string, object>();
+		List<List<string>> _addData = new List<List<string>>();
+		List<string> _addData_II = new List<string>();
+		int i=0;
+		int j=0;
+		foreach(string key in PD.DATA[MainKeyList[p_txtnameNumber]].Keys){
+			foreach(string key_II in PD.DATA[MainKeyList[p_txtnameNumber]][key].Keys){
+				if(j == 0){
+					_addData_II.Add((secondDataList[p_txtnameNumber].Count+1).ToString());
+				}
+				else{
+					_addData_II.Add(secondDataList[p_txtnameNumber][secondDataList[p_txtnameNumber].Count-1][i].ToString());
+				}
+				_Dictionary.Add(key_II, secondDataList[p_txtnameNumber][secondDataList[p_txtnameNumber].Count-1][i].ToString());
+				i++;
+				j++;
+			}
+			break;
+		}
+
+		_addData.Add(_addData_II);
+		secondDataList[p_txtnameNumber].Add(_addData_II);
+
+		PD.DATA[MainKeyList[p_txtnameNumber]].Add((secondDataList[p_txtnameNumber].Count+1).ToString(),_Dictionary);
 	}
 
 	private void CreateColor(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
@@ -309,7 +341,10 @@ public class MyWindowEditor : EditorWindow {
 	private void SaveData(){
 		Debug.Log("保存");
 
+
 		for(int i=0; i<MainKeyList.Count; i++){
+//			Debug.Log(MainKeyList.Count + "   " + PD.DATA[MainKeyList[i]].Count);
+//			Debug.Log("-------------");
 			int j=0;
 			Dictionary<string, Dictionary<string, object>> _data = new Dictionary<string, Dictionary<string, object>>();
 			foreach(string key_II in PD.DATA[MainKeyList[i]].Keys){
