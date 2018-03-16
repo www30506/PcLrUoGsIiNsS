@@ -16,6 +16,7 @@ public abstract class Page_Base : MonoBehaviour {
 	public PageSwitchType SwitchType = PageSwitchType.Active;
 	private Vector2 prePosition;
 	private RectTransform m_RectTransform;
+	private bool errorOut = false; //防止編譯器出現警告的
 
 	void Awake(){
 		canvas = this.GetComponent<Canvas> ();
@@ -54,7 +55,7 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	protected virtual IEnumerator IE_OnClose(){
-		if(1==2)
+		if(errorOut)
 			yield return null;
 	}
 
@@ -82,7 +83,7 @@ public abstract class Page_Base : MonoBehaviour {
 	}
 
 	protected virtual IEnumerator IE_OnOpen(){
-		if(1==2)
+		if(errorOut)
 			yield return null;
 	}
 }
