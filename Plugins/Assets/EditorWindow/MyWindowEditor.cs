@@ -155,9 +155,9 @@ public class MyWindowEditor : EditorWindow {
 		ShowSecondType();
 		ShowData();
 
-		if(GUI.Button(new Rect(0,MyWindowEditor.WindowHeigh - 100,MyWindowEditor.WindowWidth,90), "存檔",guiskin.GetStyle("Button"))){
-			SaveData();
-		}
+//		if(GUI.Button(new Rect(0,MyWindowEditor.WindowHeigh - 100,MyWindowEditor.WindowWidth,90), "存檔",guiskin.GetStyle("Button"))){
+//			SaveData();
+//		}
 	}
 
 	private int preMainTypeNumber;
@@ -184,7 +184,7 @@ public class MyWindowEditor : EditorWindow {
 		string _txtname = secondtxtName[MainTypeNumber][SecondTypeNumber];	
 		int _txtnameNumber = MainKeyList.IndexOf(_txtname);
 		int _W = secondDataList[_txtnameNumber][0].Count * contentWidth;
-		int _H = (secondDataList[_txtnameNumber].Count) * contentHeigt;
+		int _H = (secondDataList[_txtnameNumber].Count+1) * contentHeigt; // secondDataList[_txtnameNumber].Count+1 是因為 最後會有一個新增按鈕
 
 		GUI.BeginScrollView(new Rect(20,140,MyWindowEditor.WindowWidth - 40,50), scrollPosition, new Rect(0,0,_W+10,0),false, true, nullGUIStyle, nullGUIStyle);
 		//顯示名稱並記錄型態
