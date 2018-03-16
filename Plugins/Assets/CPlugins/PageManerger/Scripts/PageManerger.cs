@@ -42,6 +42,10 @@ public class PageManerger : MonoBehaviour {
 			return;
 		}
 
+		if(pageTypeList.Count > 0 && pageTypeList[pageTypeList.Count-1].ToString() == p_type.ToString()){
+			return;
+		}
+
 		StartCoroutine (IE_ChangePage (p_type));
 	}
 
@@ -182,6 +186,10 @@ public class PageManerger : MonoBehaviour {
 			#if Clog
 			print ("換頁中 指令無效");
 			#endif
+			return;
+		}
+
+		if(pageTypeList.Count > 0 && pageTypeList[pageTypeList.Count-1].ToString() == p_type.ToString()){
 			return;
 		}
 
