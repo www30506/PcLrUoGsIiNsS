@@ -155,9 +155,9 @@ public class MyWindowEditor : EditorWindow {
 		ShowSecondType();
 		ShowData();
 
-//		if(GUI.Button(new Rect(0,MyWindowEditor.WindowHeigh - 100,MyWindowEditor.WindowWidth,90), "存檔",guiskin.GetStyle("Button"))){
-//			SaveData();
-//		}
+		if(GUI.Button(new Rect(0,MyWindowEditor.WindowHeigh - 100,MyWindowEditor.WindowWidth,90), "存檔",guiskin.GetStyle("Button"))){
+			SaveData();
+		}
 	}
 
 	private int preMainTypeNumber;
