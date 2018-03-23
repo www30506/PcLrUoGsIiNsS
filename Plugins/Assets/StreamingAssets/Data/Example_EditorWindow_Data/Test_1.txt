@@ -1,4 +1,6 @@
-﻿[define]name	名稱	敘述	關卡	開關	遊戲總類	名稱2	顏色
-[define]type	label	string	int	toggle	option{1,2,3,4}	string	color
-key	name	des	level	select	type	ddd	color
-1	測試1_1	1	1	True	1	1	FFFFFFFF
+﻿[define]name	名稱	敘述	關卡	開關	遊戲總類	名稱2	顏色	係數
+[define]type	label	string	int	toggle	option{1,2,3,4}	string	color	float
+key	name	des	level	select	type	ddd	color	coefficient
+1	測試1_1	1	1	True	1	1	FFFFFFFF	1.05
+2	測試1_1	1	1	False	1	1	FFFFFFFF	2.05
+3	測試1_1	1	-146	False	2	1	FFFFFFFF	-3.05561

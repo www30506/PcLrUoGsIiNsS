@@ -229,6 +229,9 @@ public class MyWindowEditor : EditorWindow {
 				else if(_types[j].Contains("int")){
 					CreateIntTextField(_rect, _txtnameNumber, i, j);
 				}
+				else if(_types[j].Contains("float")){
+					CreateFloatTextField(_rect, _txtnameNumber, i, j);
+				}
 				else if(_types[j].Contains("toggle")){
 					CreateToggle(_rect,_txtnameNumber, i, j);
 				}
@@ -319,7 +322,22 @@ public class MyWindowEditor : EditorWindow {
 	private void CreateIntTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
 		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
-		tempStr = Regex.Replace(tempStr, "[^0-9]", "");
+
+		int _int =0;
+		if(int.TryParse(tempStr, out _int) == false){
+			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
+		}
+		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
+	}
+
+	private void CreateFloatTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
+		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
+
+		float _float =0;
+		if(float.TryParse(tempStr, out _float) == false){
+			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
+		}
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
