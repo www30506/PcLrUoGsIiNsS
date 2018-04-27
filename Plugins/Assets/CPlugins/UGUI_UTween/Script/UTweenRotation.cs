@@ -12,23 +12,9 @@ public class UTweenRotation : UTweener {
 		RotateType [0] = new translateDelegate(Once);
 		RotateType [1] = new translateDelegate(Loop);
 		RotateType [2] = new translateDelegate(PingPong);
-//		distanceVector = To - Form;
 	}
 
 	void OnEnable(){
-		float _distance_1 = Mathf.Abs(To.z - Form.z);
-		float _distance_2 = Mathf.Abs((To.z-360) - Form.z);
-		float _distance_3 = Mathf.Abs(To.z - Form.z);
-		float _distance_4 = Mathf.Abs(To.z - (Form.z-360));
-
-		if (_distance_2 < _distance_1) {
-			To = new Vector3 (To.x, To.y, To.z - 360);
-		} else {
-			if (_distance_4 < _distance_3) {
-				To = new Vector3 (To.x, To.y, To.z + 360);
-			}
-		}
-
 		distanceVector = To - Form;
 	}
 
