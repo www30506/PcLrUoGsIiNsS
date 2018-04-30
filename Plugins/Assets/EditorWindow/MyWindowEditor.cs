@@ -289,9 +289,9 @@ public class MyWindowEditor : EditorWindow {
 
 	private void CreateColor(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
-		ColorUtility.TryParseHtmlString("#"+tempStr, out tempColor);
+		ColorUtility.TryParseHtmlString(tempStr, out tempColor);
 		tempColor = EditorGUI.ColorField(p_rect, tempColor);
-		tempStr = ColorUtility.ToHtmlStringRGBA(tempColor);
+		tempStr = "#" + ColorUtility.ToHtmlStringRGBA(tempColor);
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
