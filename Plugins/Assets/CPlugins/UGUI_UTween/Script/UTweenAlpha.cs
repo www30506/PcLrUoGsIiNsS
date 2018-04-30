@@ -11,13 +11,25 @@ public class UTweenAlpha : UTweener {
 	protected translateDelegate[] translateType = new translateDelegate[3];
 	private float distanceVector, tempVector;
 	private CanvasRenderer crd;
+	private CanvasGroup canvasGroup;
+	private enum AlphaType{CanvasRenderer, CanvasGroup}
+	[SerializeField]private AlphaType alphaType = AlphaType.CanvasRenderer;
 
 	void Start(){
 		translateType [0] = new translateDelegate(Once);
 		translateType [1] = new translateDelegate(Loop);
 		translateType [2] = new translateDelegate(PingPong);
 		distanceVector = To - Form;
-		crd = this.GetComponent<CanvasRenderer> ();
+
+		switch (alphaType) {
+		case AlphaType.CanvasGroup:
+			canvasGroup = this.GetComponent<CanvasGroup> ();
+			break;
+
+		case AlphaType.CanvasRenderer:
+			crd = this.GetComponent<CanvasRenderer> ();
+			break;
+		}
 	}
 	
 	void LateUpdate () {
@@ -35,11 +47,11 @@ public class UTweenAlpha : UTweener {
 	public void Once(){
 		tempVector = distanceVector * Curve.Evaluate(time * percent);
 		tempVector = Form + tempVector;
-		crd.SetAlpha(tempVector) ;
+		SetAlpha(tempVector) ;
 		
 		if (time > Duration) {
 			start = false;
-			crd.SetAlpha(To);
+			SetAlpha(To);
 			OnFinished();
 			this.enabled = false;
 		}
@@ -48,7 +60,7 @@ public class UTweenAlpha : UTweener {
 	public void Loop(){
 		tempVector = distanceVector * Curve.Evaluate (time * percent);
 		tempVector = Form + tempVector;
-		crd.SetAlpha(tempVector) ;
+		SetAlpha(tempVector) ;
 		
 		if (time > Duration) {
 			time = 0;
@@ -62,12 +74,23 @@ public class UTweenAlpha : UTweener {
 			tempVector = distanceVector * Curve.Evaluate (time * percent);
 		
 		tempVector = Form + tempVector;
-		
+		SetAlpha(tempVector) ;
 
-		crd.SetAlpha(tempVector) ;
 		if (time > Duration) {
 			time = 0;
 			pingpong = !pingpong;
+		}
+	}
+
+	private void SetAlpha(float p_value){
+		switch (alphaType) {
+		case AlphaType.CanvasGroup:
+			canvasGroup.alpha = p_value;
+			break;
+
+		case AlphaType.CanvasRenderer:
+			crd.SetAlpha (p_value);
+			break;
 		}
 	}
 }
