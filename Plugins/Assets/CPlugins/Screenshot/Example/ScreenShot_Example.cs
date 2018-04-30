@@ -15,7 +15,7 @@ public class ScreenShot_Example : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.A)){
 			target.sprite = ScreenShot.ToSprite();
 		}
-		if(Input.GetKeyDown(KeyCode.B)){
+		if(Input.GetKeyDown(KeyCode.S)){
 			target_II.texture = ScreenShot.ToTexture();
 		}
 	}
