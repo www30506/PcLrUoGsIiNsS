@@ -14,7 +14,7 @@ public class PopMessage_Example : MonoBehaviour {
 			PopMessage.ConfirmMessage ("Title", "123");
 		}
 		if (Input.GetKeyDown (KeyCode.S)) {
-			PopMessage.YesNoMessage("title", "5678", C, B);
+			PopMessage.YesNoMessage("title", "5678", B, C);
 		}
 
 		if (Input.GetKeyDown (KeyCode.D)) {

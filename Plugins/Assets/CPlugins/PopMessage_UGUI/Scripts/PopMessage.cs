@@ -38,7 +38,7 @@ public class PopMessage : MonoBehaviour {
 	}
 
 	public static void CreatePopMessage(){
-		instance  = (Instantiate(Resources.Load("Plugins/PopMessage/PopMessageCanvas")) as GameObject).GetComponent<PopMessage>();
+		instance  = (Instantiate(Resources.Load("CPlugins/PopMessage/PopMessageCanvas")) as GameObject).GetComponent<PopMessage>();
 	}
 
 	/********************************************************
