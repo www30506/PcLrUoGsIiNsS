@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManerger_Example : MonoBehaviour {
+	public Scrollbar musicScrollbar;
+	public Scrollbar effectScrollbar;
 
 	void Start () {
 		
@@ -10,23 +13,21 @@ public class AudioManerger_Example : MonoBehaviour {
 		
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.A)) {	
-			AudioManerger.SetMusicVoice (0.2f);
-		}
-
-		if (Input.GetKeyUp (KeyCode.S)) {	
-			AudioManerger.SetEffiectVoice (0.2f);
-		}
-
-		if (Input.GetKeyUp (KeyCode.D)) {	
 			AudioManerger.PlayMusic (MusicType.Music_Example);
 		}
-
-		if (Input.GetKeyUp (KeyCode.F)) {	
-			AudioManerger.PlayEffect (SoundEffectType.Effect_Example);
+		if (Input.GetKeyUp (KeyCode.S)) {	
+			AudioManerger.SetMusicVoice (musicScrollbar.value);
+		}
+		if (Input.GetKeyUp (KeyCode.D)) {	
+			AudioManerger.StopMusic ();
 		}
 
-		if (Input.GetKeyUp (KeyCode.G)) {	
-			AudioManerger.StopMusic ();
+
+		if (Input.GetKeyUp (KeyCode.Q)) {	
+			AudioManerger.PlayEffect (SoundEffectType.Effect_Example);
+		}
+		if (Input.GetKeyUp (KeyCode.W)) {	
+			AudioManerger.SetEffiectVoice (effectScrollbar.value);
 		}
 	}
 }
