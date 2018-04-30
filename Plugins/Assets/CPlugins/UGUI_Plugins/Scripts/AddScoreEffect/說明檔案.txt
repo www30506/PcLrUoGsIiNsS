@@ -1,3 +1,0 @@
-在分數的Text上面掛上AddScoreEffect
-
-功能實作 製作在 LateUpdate 如果 改變Text在LateUpdate 執行 需調整cs執行的先後順序
