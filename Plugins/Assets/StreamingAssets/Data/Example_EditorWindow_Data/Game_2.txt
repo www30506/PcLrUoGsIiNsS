@@ -1,5 +1,5 @@
-﻿[define]name	名稱	敘述	關卡	開關	遊戲總類	名稱1	敘述1	關卡1	開關1	遊戲總類1	名稱2	敘述2	關卡2	開關2	遊戲總類2
+﻿[define]PID	名稱	敘述	關卡	開關	遊戲總類	名稱1	敘述1	關卡1	開關1	遊戲總類1	名稱2	敘述2	關卡2	開關2	遊戲總類2
 [define]type	label	string	int	toggle	option{1,2,3,4}	label	string	int	toggle	option{1,2,3,4}	label	string	int	toggle	option{1,2,3,4}
 key	name	des	level	select	type	name1	des1	level1	select1	type1	name2	des2	level2	select2	type2
-1	遊戲2_1	敘述1_1	5	FALSE	1	遊戲2_1	敘述1_1	5	FALSE	1	遊戲2_1	敘述1_1	5	FALSE	1
-2	遊戲2_2	敘述1_2	6	FALSE	1	遊戲2_2	敘述1_2	6	FALSE	1	遊戲2_2	敘述1_2	6	FALSE	1
+1	遊戲2_1	敘述1_1	5	False	1	遊戲2_1	敘述1_1	5	False	1	遊戲2_1	敘述1_1	5	False	1
+2	遊戲2_2	敘述1_2	6	False	1	遊戲2_2	敘述1_2	6	False	1	遊戲2_2	敘述1_2	6	False	1
