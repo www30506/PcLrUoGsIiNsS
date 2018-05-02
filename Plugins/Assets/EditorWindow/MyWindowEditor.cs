@@ -213,15 +213,11 @@ public class MyWindowEditor : EditorWindow {
 		GUI.EndScrollView();
 		
 		//顯示資料
-//		scrollPosition = GUI.BeginScrollView(new Rect(20,200,MyWindowEditor.WindowWidth -40 ,MyWindowEditor.WindowHeigh - 320), scrollPosition, new Rect(0,0,_W,_H));
-		scrollPosition = GUI.BeginScrollView(new Rect(0,200,MyWindowEditor.WindowWidth -20, MyWindowEditor.WindowHeigh - 320), scrollPosition, new Rect(0,0,_W,_H));
-		for(int i=0; i<secondDataList[_txtnameNumber].Count; i++){
-			if(GUI.Button(new Rect(0, (i)*contentHeigt, 20, 20),"X")){
-				DeleteData(i+1);
-			}
+		scrollPosition = GUI.BeginScrollView(new Rect(20,200,MyWindowEditor.WindowWidth -40 ,MyWindowEditor.WindowHeigh - 320), scrollPosition, new Rect(0,0,_W,_H));
 
+		for(int i=0; i<secondDataList[_txtnameNumber].Count; i++){
 			for(int j = 0; j<secondDataList[_txtnameNumber][i].Count; j++){
-				Rect _rect = new Rect(j*contentWidth + 20, (i)*contentHeigt, contentWidth-10, 30);
+				Rect _rect = new Rect(j*contentWidth, (i)*contentHeigt, contentWidth-10, 30);
 				if(_types[j].Contains("type")){
 					CreateLabel(_rect, secondDataList[_txtnameNumber][i][j]);
 				}
@@ -263,35 +259,6 @@ public class MyWindowEditor : EditorWindow {
 			AddData(_txtnameNumber);
 		}
 		GUI.EndScrollView();
-	}
-
-	private void DeleteData(int p_IDNumber){
-		Debug.Log("刪除資料 ID " + p_IDNumber);
-
-		Dictionary<string, object> _Dictionary = new Dictionary<string, object>();
-		List<List<string>> _addData = new List<List<string>>();
-		List<string> _addData_II = new List<string>();
-		int i=0;
-		int j=0;
-		foreach(string key in PD.DATA[MainKeyList[p_IDNumber]].Keys){
-			foreach(string key_II in PD.DATA[MainKeyList[p_IDNumber]][key].Keys){
-				if(j == 0){
-					_addData_II.Remove((secondDataList[p_IDNumber].Count+1).ToString());
-				}
-				else{
-					_addData_II.Remove(secondDataList[p_IDNumber][secondDataList[p_IDNumber].Count-1][i].ToString());
-				}
-				_Dictionary.Remove(key_II);
-				i++;
-				j++;
-			}
-			break;
-		}
-
-		_addData.Remove(_addData_II);
-		secondDataList[p_IDNumber].Remove(_addData_II);
-
-		PD.DATA[MainKeyList[p_IDNumber]].Remove((secondDataList[p_IDNumber].Count+1).ToString());
 	}
 
 	private void AddData(int p_txtnameNumber){
