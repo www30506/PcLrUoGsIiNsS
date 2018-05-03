@@ -79,7 +79,7 @@ public class MyWindowCreate : EditorWindow{
 				_newData.Add((int.Parse(horizontalList[horizontalList.Count-1][i])+1).ToString());
 			}
 			else{
-				_newData.Add(horizontalList[horizontalList.Count-1][i]);
+				_newData.Add("");
 			}
 		}
 
