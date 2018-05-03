@@ -147,10 +147,21 @@ public class MyWindowEditor : EditorWindow {
 	public string tempStr;
 	private int tempInt;
 	private Vector2 scrollPosition = Vector2.zero;
-
+	private enum SaveStatue{None, Error, Compelte};
+	private SaveStatue saveStatue = SaveStatue.None;
 	private Color tempColor = Color.white;
 
 	void OnGUI(){
+		if(saveStatue == SaveStatue.Compelte){
+			EditorUtility.DisplayDialog("系統", "存檔成功", "Reset");
+			saveStatue = SaveStatue.None;
+		}
+		else if (saveStatue == SaveStatue.Error){
+			EditorUtility.DisplayDialog("系統", "存檔失敗", "Reset");
+			saveStatue = SaveStatue.None;
+		}
+
+
 		ShowMainType();
 		ShowSecondType();
 		ShowData();
@@ -360,6 +371,7 @@ public class MyWindowEditor : EditorWindow {
 	private void SaveData(){
 		Debug.Log("保存");
 
+		saveStatue = SaveStatue.Error;
 
 		for(int i=0; i<MainKeyList.Count; i++){
 //			Debug.Log(MainKeyList.Count + "   " + PD.DATA[MainKeyList[i]].Count);
@@ -379,6 +391,8 @@ public class MyWindowEditor : EditorWindow {
 			}
 			PD.Save(_data, MainKeyList[i]);
 		}
+
+		saveStatue = SaveStatue.Compelte;
 	}
 }
 #endif
