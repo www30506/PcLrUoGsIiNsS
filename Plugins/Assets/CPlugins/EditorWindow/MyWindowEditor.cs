@@ -339,29 +339,13 @@ public class MyWindowEditor : EditorWindow {
 
 	private void CreateIntTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
-		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
-
-		int _int =0;
-		if(int.TryParse(tempStr, out _int) == false){
-			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
-		}
-		else{
-			tempStr = int.Parse(tempStr).ToString();
-		}
+		tempStr = EditorGUI.DelayedIntField(p_rect, int.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
 	private void CreateFloatTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
-		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
-
-		float _float =0;
-		if(float.TryParse(tempStr, out _float) == false){
-			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
-		}
-		else{
-			tempStr = float.Parse(tempStr).ToString();
-		}
+		tempStr = EditorGUI.DelayedFloatField(p_rect, float.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
@@ -374,17 +358,10 @@ public class MyWindowEditor : EditorWindow {
 		string[] _condition = Regex.Split(_replace, ",");
 
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
-		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
+		tempStr = EditorGUI.DelayedIntField(p_rect, int.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 
-		int _int =0;
-		if(int.TryParse(tempStr, out _int) == false){
+		if(int.Parse(tempStr) < int.Parse(_condition[0]) || int.Parse(tempStr) > int.Parse(_condition[1])){
 			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
-		}
-		else{
-			tempStr = int.Parse(tempStr).ToString();
-			if(int.Parse(tempStr) < int.Parse(_condition[0]) || int.Parse(tempStr) > int.Parse(_condition[1])){
-				tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
-			}
 		}
 
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
@@ -399,17 +376,10 @@ public class MyWindowEditor : EditorWindow {
 		string[] _condition = Regex.Split(_replace, ",");
 
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
-		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
+		tempStr = EditorGUI.DelayedFloatField(p_rect, float.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 
-		float _float =0;
-		if(float.TryParse(tempStr, out _float) == false){
+		if(float.Parse(tempStr) < float.Parse(_condition[0]) || float.Parse(tempStr) > float.Parse(_condition[1])){
 			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
-		}
-		else{
-			tempStr = float.Parse(tempStr).ToString();
-			if(float.Parse(tempStr) < float.Parse(_condition[0]) || float.Parse(tempStr) > float.Parse(_condition[1])){
-				tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
-			}
 		}
 
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
