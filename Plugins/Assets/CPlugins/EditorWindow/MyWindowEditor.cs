@@ -315,6 +315,9 @@ public class MyWindowEditor : EditorWindow {
 
 	private void CreateColor(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = "#FFFFFFFF";
+		}
 		ColorUtility.TryParseHtmlString(tempStr, out tempColor);
 		tempColor = EditorGUI.ColorField(p_rect, tempColor);
 		tempStr = "#" + ColorUtility.ToHtmlStringRGBA(tempColor);
@@ -347,12 +350,18 @@ public class MyWindowEditor : EditorWindow {
 
 	private void CreateIntTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = "0";
+		}
 		tempStr = EditorGUI.DelayedIntField(p_rect, int.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
 	private void CreateFloatTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = "0";
+		}
 		tempStr = EditorGUI.DelayedFloatField(p_rect, float.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
@@ -366,6 +375,9 @@ public class MyWindowEditor : EditorWindow {
 		string[] _condition = Regex.Split(_replace, ",");
 
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = _condition[0];
+		}
 		tempStr = EditorGUI.DelayedIntField(p_rect, int.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 
 		if(int.Parse(tempStr) < int.Parse(_condition[0]) || int.Parse(tempStr) > int.Parse(_condition[1])){
@@ -377,6 +389,9 @@ public class MyWindowEditor : EditorWindow {
 
 	private void CreateVector2Field(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = "(0,0)";
+		}
 		if (tempStr.StartsWith ("(") && tempStr.EndsWith (")")) {
 			tempStr = tempStr.Substring(1, tempStr.Length-2);
 		}
@@ -391,6 +406,9 @@ public class MyWindowEditor : EditorWindow {
 
 	private void CreateVector3Field(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = "(0,0,0)";
+		}
 		if (tempStr.StartsWith ("(") && tempStr.EndsWith (")")) {
 			tempStr = tempStr.Substring(1, tempStr.Length-2);
 		}
@@ -412,6 +430,9 @@ public class MyWindowEditor : EditorWindow {
 		string[] _condition = Regex.Split(_replace, ",");
 
 		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if(string.IsNullOrEmpty(tempStr)){
+			tempStr = _condition[0];
+		}
 		tempStr = EditorGUI.DelayedFloatField(p_rect, float.Parse(tempStr),guiskin.GetStyle("M_TextField")).ToString();
 
 		if(float.Parse(tempStr) < float.Parse(_condition[0]) || float.Parse(tempStr) > float.Parse(_condition[1])){
