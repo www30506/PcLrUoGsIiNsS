@@ -64,7 +64,7 @@ public class MyWindowCreate : EditorWindow{
 		}
 
 		CreateType();
-		int _W = MyWindowCreate.WindowWidth;
+		int _W = MyWindowCreate.WindowWidth-400;
 		int _H = (horizontalList.Count+1) * 50+20;
 
 		scrollPosition = GUI.BeginScrollView(new Rect(0,80,MyWindowCreate.WindowWidth - 40,MyWindowCreate.WindowHeigh-320), scrollPosition, new Rect(0,0,_W,_H));
