@@ -256,6 +256,12 @@ public class MyWindowEditor : EditorWindow {
 					string[] _options = Regex.Split(_replace, ",");
 					CreateOption(_rect,_txtnameNumber, i, j, _options);
 				}
+				else if(_types[j].Contains("Irange")){
+					CreateIrangeTextField(_rect, _txtnameNumber, i, j, _types[j]);
+				}
+				else if(_types[j].Contains("Range")){
+					CreateRangeTextField(_rect, _txtnameNumber, i, j, _types[j]);
+				}
 				else if(_types[j].Contains("color")){
 					CreateColor(_rect, _txtnameNumber, i, j);
 				}
@@ -339,6 +345,9 @@ public class MyWindowEditor : EditorWindow {
 		if(int.TryParse(tempStr, out _int) == false){
 			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
 		}
+		else{
+			tempStr = int.Parse(tempStr).ToString();
+		}
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
@@ -350,6 +359,59 @@ public class MyWindowEditor : EditorWindow {
 		if(float.TryParse(tempStr, out _float) == false){
 			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
 		}
+		else{
+			tempStr = float.Parse(tempStr).ToString();
+		}
+		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
+	}
+
+	private void CreateIrangeTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II, string p_data){
+		string _data = p_data;
+		string _replace = Regex.Replace(_data, "Irange", "");
+		_replace = Regex.Replace(_replace, "{", "");
+		_replace = Regex.Replace(_replace, "}", "");
+
+		string[] _condition = Regex.Split(_replace, ",");
+
+		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
+
+		int _int =0;
+		if(int.TryParse(tempStr, out _int) == false){
+			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
+		}
+		else{
+			tempStr = int.Parse(tempStr).ToString();
+			if(int.Parse(tempStr) < int.Parse(_condition[0]) || int.Parse(tempStr) > int.Parse(_condition[1])){
+				tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
+			}
+		}
+
+		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
+	}
+
+	private void CreateRangeTextField(Rect p_rect, int p_txtName, int p_key_I, int p_key_II, string p_data){
+		string _data = p_data;
+		string _replace = Regex.Replace(_data, "Range", "");
+		_replace = Regex.Replace(_replace, "{", "");
+		_replace = Regex.Replace(_replace, "}", "");
+
+		string[] _condition = Regex.Split(_replace, ",");
+
+		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		tempStr = GUI.TextField(p_rect, tempStr,guiskin.GetStyle("M_TextField"));
+
+		float _float =0;
+		if(float.TryParse(tempStr, out _float) == false){
+			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
+		}
+		else{
+			tempStr = float.Parse(tempStr).ToString();
+			if(float.Parse(tempStr) < float.Parse(_condition[0]) || float.Parse(tempStr) > float.Parse(_condition[1])){
+				tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
+			}
+		}
+
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
