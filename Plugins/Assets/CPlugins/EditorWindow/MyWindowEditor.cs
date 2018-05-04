@@ -144,6 +144,8 @@ public class MyWindowEditor : EditorWindow {
 		window.Show();
 	}
 
+	public Vector2 tempVector2;
+	public Vector3 tempVector3;
 	public string tempStr;
 	private int tempInt;
 	private Vector2 scrollPosition = Vector2.zero;
@@ -262,6 +264,12 @@ public class MyWindowEditor : EditorWindow {
 				else if(_types[j].Contains("Range")){
 					CreateRangeTextField(_rect, _txtnameNumber, i, j, _types[j]);
 				}
+				else if(_types[j].Contains("vector2")){
+					CreateVector2Field(_rect, _txtnameNumber, i, j);
+				}
+				else if(_types[j].Contains("vector3")){
+					CreateVector3Field(_rect, _txtnameNumber, i, j);
+				}
 				else if(_types[j].Contains("color")){
 					CreateColor(_rect, _txtnameNumber, i, j);
 				}
@@ -364,6 +372,34 @@ public class MyWindowEditor : EditorWindow {
 			tempStr = secondDataList[p_txtName][p_key_I][p_key_II];
 		}
 
+		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
+	}
+
+	private void CreateVector2Field(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
+		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if (tempStr.StartsWith ("(") && tempStr.EndsWith (")")) {
+			tempStr = tempStr.Substring(1, tempStr.Length-2);
+		}
+
+		string[] _array = tempStr.Split(',');
+		tempVector2 = new Vector2(float.Parse(_array[0]), float.Parse(_array[1]));
+
+		tempVector2 = EditorGUI.Vector2Field(p_rect, "", tempVector2);
+		tempStr = tempVector2.ToString();
+		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
+	}
+
+	private void CreateVector3Field(Rect p_rect, int p_txtName, int p_key_I, int p_key_II){
+		tempStr = secondDataList[p_txtName][p_key_I][p_key_II].ToString();
+		if (tempStr.StartsWith ("(") && tempStr.EndsWith (")")) {
+			tempStr = tempStr.Substring(1, tempStr.Length-2);
+		}
+
+		string[] _array = tempStr.Split(',');
+		tempVector3 = new Vector3(float.Parse(_array[0]), float.Parse(_array[1]), float.Parse(_array[2]));
+
+		tempVector3 = EditorGUI.Vector3Field(p_rect, "", tempVector3);
+		tempStr = tempVector3.ToString();
 		secondDataList[p_txtName][p_key_I][p_key_II] = tempStr;
 	}
 
