@@ -15,6 +15,9 @@ public class MyWindowCreate : EditorWindow{
 	private List<List<string>> horizontalList = new List<List<string>>();
 	private enum SaveStatue{None, Error, Compelte};
 	private SaveStatue saveStatue = SaveStatue.None;
+	private static int WindowWidth = 1920; //視窗寬度
+	private static int WindowHeigh = 1030; //視窗高度
+	private Vector2 scrollPosition = Vector2.zero;
 
 	void Awake(){
 		guiskin = Resources.Load("EditorWindow/EditorWindow_GUISkin") as GUISkin;
@@ -46,7 +49,7 @@ public class MyWindowCreate : EditorWindow{
 
 	[MenuItem("Window/MyWindowCreate")]
 	public static void ShowMyWindowCreate(){
-		MyWindowCreate window = (MyWindowCreate)EditorWindow.GetWindow(typeof(MyWindowCreate));
+		MyWindowCreate window = (MyWindowCreate)EditorWindow.GetWindowWithRect(typeof(MyWindowCreate), new Rect(0, 0, MyWindowCreate.WindowWidth, MyWindowCreate.WindowHeigh));
 		window.Show();
 	}
 
@@ -61,9 +64,14 @@ public class MyWindowCreate : EditorWindow{
 		}
 
 		CreateType();
+		int _W = MyWindowCreate.WindowWidth;
+		int _H = (horizontalList.Count+1) * 50+20;
+
+		scrollPosition = GUI.BeginScrollView(new Rect(0,80,MyWindowCreate.WindowWidth - 40,MyWindowCreate.WindowHeigh-320), scrollPosition, new Rect(0,0,_W,_H));
 		CreateHorizontal();
-		SaveBtn();
 		AddDataBtn();
+		GUI.EndScrollView();
+		SaveBtn();
 	}
 
 	private void AddDataBtn(){
@@ -87,7 +95,7 @@ public class MyWindowCreate : EditorWindow{
 	}
 
 	private void SaveBtn(){
-		if(GUI.Button(new Rect(horizontalList[0].Count * 150 +250 , 10, 200,200), "存檔",guiskin.GetStyle("Button"))){
+		if(GUI.Button(new Rect(0 , 800, MyWindowCreate.WindowWidth,200), "存檔",guiskin.GetStyle("Button"))){
 			SaveData();
 		}
 	}
@@ -131,7 +139,7 @@ public class MyWindowCreate : EditorWindow{
 
 	private void CreateVertical(int p_row){
 		for(int i=0; i< horizontalList[p_row].Count; i++){
-			Rect _rect = new Rect(i * 150+50, p_row*50+20, 140, 45);
+			Rect _rect = new Rect(i * 150+50, p_row*50, 140, 45);
 
 			if(i == maintype || i == secondtype){
 				string _tempStr = horizontalList[p_row][i];
@@ -144,13 +152,13 @@ public class MyWindowCreate : EditorWindow{
 		}
 		//刪除按鈕
 		if(p_row !=1){
-			if(GUI.Button(new Rect(0, p_row*50+20, 45, 45), "X")){
+			if(GUI.Button(new Rect(0, p_row*50, 45, 45), "X")){
 				DeleteHorizontalList(p_row);
 			}
 		}
 		//txtPath按鈕
 		try{
-			if(GUI.Button(new Rect(horizontalList[p_row].Count*150+50, p_row*50+20, 140, 45), "Change")){
+			if(GUI.Button(new Rect(horizontalList[p_row].Count*150+50, p_row*50, 140, 45), "Change")){
 				OpenSelectFilePath(p_row);
 			}
 		}
