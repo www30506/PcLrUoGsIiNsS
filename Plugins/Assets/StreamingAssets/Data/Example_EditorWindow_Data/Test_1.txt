@@ -1,7 +1,7 @@
-﻿[define]PID	名稱	敘述	關卡	開關	遊戲總類	名稱2	顏色	係數	範圍	範圍
+﻿[define]PID	名稱	敘述	關卡	開關	遊戲總類	名稱2	顏色	係數	範圍(0~10)	範圍(-10~10)
 [define]type	label	string	int	toggle	option{a1,a2,a3,a4}	string	color	float	Irange{0,10}	Range{-10,10}
 key	name	des	level	select	type	ddd	color	coefficient	Irange	range
-1	測試1_1	王八蛋	1	False	a2	1	#000CFFFF	1.05	10	-1
+1	測試1_1	王八蛋	1	False	a2	1	#000CFFFF	1.05	10	-10
 2	測試1_1	1	1	False	a1	1	#FFFFFFFF	2.05	0	0
 3	測試1_1	1	-146	False	a1	1	#FFFFFFFF	-3.05561	0	0
 4	測試1_1	1	-146	False	a1	1	#FFFFFFFF	-3.05561	0	0
