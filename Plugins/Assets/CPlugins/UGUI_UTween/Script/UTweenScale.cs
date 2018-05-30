@@ -36,11 +36,15 @@ public class UTweenScale : UTweener {
 	public void OnceScling(){
 		tempVector = distanceVector * Curve.Evaluate(time*percent);
 		tempVector = Form + tempVector;
-		myRectTransfrom.localScale = tempVector ;
+
+		SetScale(tempVector);
+
 
 		if (time > Duration) {
 			start = false;
-			myRectTransfrom.localScale = To;
+			tempVector = distanceVector * Curve.Evaluate(1);
+			tempVector = Form + tempVector;
+			SetScale(tempVector);
 			OnFinished();
 			this.enabled = false;
 		}
@@ -49,7 +53,7 @@ public class UTweenScale : UTweener {
 	public void LoopScling(){
 		tempVector = distanceVector * Curve.Evaluate (time * percent);
 		tempVector = Form + tempVector;
-		myRectTransfrom.localScale = tempVector;
+		SetScale(tempVector);
 
 		if (time > Duration) {
 			time = 0;
@@ -64,11 +68,21 @@ public class UTweenScale : UTweener {
 
 		tempVector = Form + tempVector;
 
-		myRectTransfrom.localScale = tempVector;
+		SetScale(tempVector);
 		if (time > Duration) {
 			time = 0;
 			pingpong = !pingpong;
 		}
 	}
 
+	private void SetScale(Vector3 p_vector3){
+		switch(type){
+		case UseType.UGUI:
+			myRectTransfrom.localScale = p_vector3 ;
+			break;
+		case UseType.Sprite2D:
+			myTransform.localScale = p_vector3;
+			break;
+		}
+	}
 }

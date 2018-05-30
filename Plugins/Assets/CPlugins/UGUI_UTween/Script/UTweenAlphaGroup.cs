@@ -2,8 +2,9 @@
 using System.Collections;
 
 
-[AddComponentMenu("UI/Tween/TweenAlpha")]
-public class UTweenAlpha : UTweener {
+[RequireComponent(typeof(CanvasGroup))]
+[AddComponentMenu("UI/Tween/TweenAlphaGroup")]
+public class UTweenAlphaGroup : UTweener {
 	[Range(0f,1f)]
 	public float Form;
 	[Range(0f,1f)]
@@ -12,8 +13,10 @@ public class UTweenAlpha : UTweener {
 	private float distanceVector, tempAlpha;
 	private CanvasRenderer crd;
 	private SpriteRenderer spriteRenderer;
+	private CanvasGroup canvasGroup;
 
 	void Start(){
+		canvasGroup = this.GetComponent<CanvasGroup>();
 		translateType [0] = new translateDelegate(Once);
 		translateType [1] = new translateDelegate(Loop);
 		translateType [2] = new translateDelegate(PingPong);
@@ -26,7 +29,7 @@ public class UTweenAlpha : UTweener {
 			crd = this.GetComponent<CanvasRenderer> ();
 		}
 	}
-	
+
 	void LateUpdate () {
 		if (start) {
 			Translate ();
@@ -37,14 +40,14 @@ public class UTweenAlpha : UTweener {
 		time += ignoreTimeScale? Time.unscaledDeltaTime : Time.deltaTime;
 		translateType [(int)loopType]();
 	}
-	
+
 	public delegate void translateDelegate();
 	public void Once(){
 		tempAlpha = distanceVector * Curve.Evaluate(time * percent);
 		tempAlpha = Form + tempAlpha;
 
 		SetAlpha(tempAlpha) ;
-		
+
 		if (time > Duration) {
 			start = false;
 			tempAlpha = distanceVector * Curve.Evaluate(1);
@@ -54,24 +57,24 @@ public class UTweenAlpha : UTweener {
 			this.enabled = false;
 		}
 	}
-	
+
 	public void Loop(){
 		tempAlpha = distanceVector * Curve.Evaluate (time * percent);
 		tempAlpha = Form + tempAlpha;
 
 		SetAlpha(tempAlpha) ;
-		
+
 		if (time > Duration) {
 			time = 0;
 		}
 	}
-	
+
 	public void PingPong(){
 		if (pingpong) 
 			tempAlpha = distanceVector * Curve.Evaluate ((Duration - time) * percent);
 		else 
 			tempAlpha = distanceVector * Curve.Evaluate (time * percent);
-		
+
 		tempAlpha = Form + tempAlpha;
 
 		SetAlpha(tempAlpha);
@@ -83,15 +86,6 @@ public class UTweenAlpha : UTweener {
 	}
 
 	private void SetAlpha(float p_Alpha){
-		switch(type){
-		case UseType.UGUI:
-			crd.SetAlpha (p_Alpha);
-			break;
-		case UseType.Sprite2D:
-			Color _color = spriteRenderer.color;
-			_color.a = p_Alpha;
-			spriteRenderer.color = _color;
-			break;
-		}
+		canvasGroup.alpha = p_Alpha;
 	}
 }

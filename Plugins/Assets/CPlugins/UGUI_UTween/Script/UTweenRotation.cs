@@ -38,11 +38,13 @@ public class UTweenRotation : UTweener {
 	public void Once(){
 		tempVector = distanceVector * Curve.Evaluate(time*percent);
 		tempVector = Form + tempVector;
-		myRectTransfrom.localEulerAngles  = tempVector ;
+		SetRotation(tempVector);
 		
 		if (time > Duration) {
 			start = false;
-			myRectTransfrom.localEulerAngles = To;
+			tempVector = distanceVector * Curve.Evaluate(1);
+			tempVector = Form + tempVector;
+			SetRotation(tempVector);
 			OnFinished();
 			this.enabled = false;
 		}
@@ -51,7 +53,8 @@ public class UTweenRotation : UTweener {
 	public void Loop(){
 		tempVector = distanceVector * Curve.Evaluate (time * percent);
 		tempVector = Form + tempVector;
-		myRectTransfrom.localEulerAngles  = tempVector;
+
+		SetRotation(tempVector);
 		
 		if (time > Duration) {
 			time = 0;
@@ -66,10 +69,22 @@ public class UTweenRotation : UTweener {
 		
 		tempVector = Form + tempVector;
 		
-		myRectTransfrom.localEulerAngles  =tempVector;
+		SetRotation(tempVector);
+
 		if (time > Duration) {
 			time = 0;
 			pingpong = !pingpong;
+		}
+	}
+
+	private void SetRotation(Vector3 p_vector3){
+		switch(type){
+		case UseType.UGUI:
+			myRectTransfrom.localEulerAngles = p_vector3;
+			break;
+		case UseType.Sprite2D:
+			myTransform.localEulerAngles = p_vector3;
+			break;
 		}
 	}
 }
