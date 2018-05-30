@@ -15,13 +15,6 @@ public class UTweenSize : UTweener {
 		translateType [1] = new translateDelegate(Loop);
 		translateType [2] = new translateDelegate(PingPong);
 		distanceSize = To - Form;
-
-		if(type == UseType.Sprite2D){
-			spriteRenderer = this.GetComponent<SpriteRenderer>();
-		}
-		else if (type == UseType.UGUI){
-			rectTransform = this.GetComponent<RectTransform> ();
-		}
 	}
 
 	void LateUpdate () {
