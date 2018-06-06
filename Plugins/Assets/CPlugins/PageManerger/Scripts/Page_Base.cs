@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PageSwitchType{Active, Canvas};
+public enum PageSwitchType{Active, Canvas, Camera};
 
 [RequireComponent(typeof(Canvas))]
 [RequireComponent(typeof(CanvasScaler))]
@@ -13,15 +13,15 @@ public abstract class Page_Base : MonoBehaviour {
 	[HideInInspector]public bool isOpening = false;
 	[HideInInspector]public Canvas canvas;
 
-	public PageSwitchType SwitchType = PageSwitchType.Active;
+	public PageSwitchType SwitchType = PageSwitchType.Camera;
 	private Vector2 prePosition;
-	private RectTransform m_RectTransform;
 	private bool errorOut = false; //防止編譯器出現警告的
+	[HideInInspector]public RectTransform contentTransform;
 
 	void Awake(){
 		canvas = this.GetComponent<Canvas> ();
-		m_RectTransform = this.GetComponent<RectTransform> ();
-		prePosition = m_RectTransform.anchoredPosition;
+		contentTransform = this.transform.Find("Content").GetComponent<RectTransform>();
+		prePosition = contentTransform.anchoredPosition;
 	}
 	/// <summary>
 	///  返回上一頁
@@ -42,7 +42,7 @@ public abstract class Page_Base : MonoBehaviour {
 		isClosing = true;
 		OnClose ();
 		yield return StartCoroutine (IE_OnClose ());
-		m_RectTransform.anchoredPosition = prePosition;
+		contentTransform.anchoredPosition = prePosition;
 		isClosing = false;
 	}
 
@@ -70,6 +70,7 @@ public abstract class Page_Base : MonoBehaviour {
 	IEnumerator IE_Open(){
 		isOpening = false;
 		OnOpen ();
+		contentTransform.anchoredPosition = Vector2.zero;
 		yield return StartCoroutine (IE_OnOpen ());
 		isOpening = true;
 	}

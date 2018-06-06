@@ -76,9 +76,11 @@ public class PageManerger : MonoBehaviour {
 	IEnumerator OpenTargetPage(PageType p_type){
 		for (int i = 0; i < allPages.Length; i++) {
 			if (allPages [i].gameObject.name == p_type.ToString ()) {
-				allPages [i].GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, 0);
 				if(allPages [i].SwitchType == PageSwitchType.Active){
 					allPages [i].gameObject.SetActive(true);
+				}
+				else if(allPages [i].SwitchType == PageSwitchType.Camera){
+//					allPages [i].contentTransform.anchoredPosition = new Vector2(0,0);
 				}
 				else if(allPages [i].SwitchType == PageSwitchType.Canvas){
 					allPages [i].canvas.enabled = true;
@@ -107,6 +109,9 @@ public class PageManerger : MonoBehaviour {
 				if(allPages [i].SwitchType == PageSwitchType.Active){
 					allPages [i].gameObject.SetActive(false);
 				}
+				else if(allPages [i].SwitchType == PageSwitchType.Camera){
+//					allPages [i].contentTransform.anchoredPosition = new Vector2(0,0);
+				}
 				else if(allPages [i].SwitchType == PageSwitchType.Canvas){
 					allPages [i].canvas.enabled = false;
 				}
@@ -130,6 +135,9 @@ public class PageManerger : MonoBehaviour {
 
 			if(allPages [i].SwitchType == PageSwitchType.Active){
 				allPages [i].gameObject.SetActive(false);
+			}
+			else if(allPages [i].SwitchType == PageSwitchType.Camera){
+//				allPages [i].contentTransform.anchoredPosition = new Vector2(300,0);
 			}
 			else if(allPages [i].SwitchType == PageSwitchType.Canvas){
 				allPages [i].canvas.enabled = false;

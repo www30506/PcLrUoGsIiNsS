@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test_Controller : MonoBehaviour {
+public class PageManerger_Example : MonoBehaviour {
 	
-	void Start () {
+	IEnumerator Start () {
+		Debug.logger.logEnabled = false;
 		PageManerger.CloseAllPage ();
+		yield return null;
 		PageManerger.ChangePage (PageType.Test_MainPage);
 	}
 	
