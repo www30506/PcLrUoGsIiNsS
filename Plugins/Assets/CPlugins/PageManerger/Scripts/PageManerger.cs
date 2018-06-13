@@ -175,7 +175,7 @@ public class PageManerger : MonoBehaviour {
 		pageList.RemoveAt (pageList.Count - 1);
 		pageTypeList.RemoveAt (pageTypeList.Count - 1);
 
-		if (pageList [pageList.Count-1].canvas.enabled == false) {
+		if (pageTypeList.Count > 0) {
 			yield return StartCoroutine(OpenTargetPage (pageTypeList [pageTypeList.Count - 1]));
 		}
 
