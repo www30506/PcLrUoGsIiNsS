@@ -24,17 +24,18 @@ public class UnitTest_UGUI : MonoBehaviour {
 	}
 
 	private IEnumerator IEPlayRecord(){
-		var timer = System.Diagnostics.Stopwatch.StartNew();
+		float _time = 0;
 		testData = Resources.Load("UnitTest/TestData") as TextAsset;
 		playRecordJsonData = JsonUtility.FromJson<TestRecordJson>(testData.text);
 
 		int _Testcount = 0;
 		while(_Testcount < playRecordJsonData._data.Count){
-			if(timer.Elapsed.TotalSeconds > playRecordJsonData._data[_Testcount].time){
+			if(_time > playRecordJsonData._data[_Testcount].time){
 				play(playRecordJsonData._data[_Testcount].postion);
 				_Testcount++;
 			}
 			yield return null;
+			_time += Time.deltaTime;
 		}
 		print("回放結束");
 	}

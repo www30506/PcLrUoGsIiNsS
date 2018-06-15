@@ -8,8 +8,7 @@ public class UnitTest_UGUIExample : MonoBehaviour {
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if(Input.GetKeyUp(KeyCode.R)){
 			unitTest_UGUI.Record();
@@ -17,11 +16,19 @@ public class UnitTest_UGUIExample : MonoBehaviour {
 
 		if(Input.GetKeyUp(KeyCode.S)){
 			unitTest_UGUI.StopRecord();
-//			unitTest_UGUI.
 		}
 
 		if(Input.GetKeyUp(KeyCode.P)){
 			unitTest_UGUI.PlayRecord();
+		}
+
+		if(Input.GetKeyUp(KeyCode.Z)){
+			print("時間100倍");
+			Time.timeScale = 100;
+		}
+		if(Input.GetKeyUp(KeyCode.X)){
+			print("時間恢復");
+			Time.timeScale = 1;
 		}
 	}
 
