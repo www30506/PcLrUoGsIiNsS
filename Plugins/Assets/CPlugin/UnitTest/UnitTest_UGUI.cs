@@ -16,20 +16,14 @@ public class UnitTest_UGUI : MonoBehaviour {
 	}
 
 	void Update () {
-		if(Input.GetKeyUp(KeyCode.R)){
-			StartCoroutine(record());
-		}
-
-		if(Input.GetKeyUp(KeyCode.S)){
-			StopRecord();
-		}
-
-		if(Input.GetKeyUp(KeyCode.P)){
-			StartCoroutine(PlayRecord());
-		}
 	}
 
-	IEnumerator PlayRecord(){
+	public void PlayRecord(){
+		print("回放錄製");
+		StartCoroutine(IEPlayRecord());
+	}
+
+	private IEnumerator IEPlayRecord(){
 		var timer = System.Diagnostics.Stopwatch.StartNew();
 		testData = Resources.Load("UnitTest/TestData") as TextAsset;
 		playRecordJsonData = JsonUtility.FromJson<TestRecordJson>(testData.text);
@@ -42,10 +36,11 @@ public class UnitTest_UGUI : MonoBehaviour {
 			}
 			yield return null;
 		}
-		print("測試結束");
+		print("回放結束");
 	}
 
-	private void StopRecord(){
+	public void StopRecord(){
+		print("結束錄製");
 		isRecord = false;
 		StreamWriter _writer = new StreamWriter(Application.dataPath + "/Resources/UnitTest/" + testData.name + ".txt");
 		_writer.WriteLine(JsonUtility.ToJson(recordJsonData));
@@ -53,8 +48,12 @@ public class UnitTest_UGUI : MonoBehaviour {
 		print("儲存的紀錄 : " + JsonUtility.ToJson(recordJsonData));
 	}
 
+	public void Record(){
+		print("開始錄製");
+		StartCoroutine(IE_Record());
+	}
 
-	IEnumerator record()
+	private IEnumerator IE_Record()
 	{
 		if(isRecord) yield break;
 
@@ -72,7 +71,7 @@ public class UnitTest_UGUI : MonoBehaviour {
 			}
 
 			var p = Input.mousePosition;
-			Debug.Log(string.Format("座標={0}x{1} 物件名稱={2} 經過時間={3}", p.x, p.y, go.name, timer.Elapsed.TotalSeconds));
+			print(string.Format("座標={0}x{1} 物件名稱={2} 經過時間={3}", p.x, p.y, go.name, timer.Elapsed.TotalSeconds));
 			TestRecord _TestRecord = new TestRecord(new Vector2(p.x, p.y) , timer.Elapsed.TotalSeconds);
 			recordJsonData._data.Add(_TestRecord);
 		}
@@ -100,18 +99,6 @@ public class UnitTest_UGUI : MonoBehaviour {
 				ev,
 				(handler, eventData) => handler.OnPointerClick((PointerEventData)eventData));
 		}
-	}
-
-	public void Hi(){
-		print("Hi");
-	}
-
-	public void Click(){
-		print("Click");
-	}
-
-	public void Up(int p_number){
-		print("Up " +p_number);
 	}
 
 	[System.Serializable]
