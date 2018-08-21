@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHandler,IPointerUpHandler {
 	[SerializeField]private Button[] target;
-
+	[SerializeField]private float circleCrossSpeed = 0.2f;
 	private Material maskMaterial;
 	private Vector4 center;
 	private float diameter; // 直径
@@ -18,23 +18,26 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 	void Awake (){
 		canvas = GameObject.Find ("Canvas").GetComponent<Canvas> ();
-
-	}
-
-	void Start(){
 		for(int i=0; i<target.Length; i++){
 			target[i].gameObject.SetActive(false);
 		}
+	}
 
-		ShowTarget();
+	void Start(){
+		
 	}
 
 	void Update () {
-		float value = Mathf.SmoothDamp(current, diameter, ref yVelocity, 0.3f);
+		float value = Mathf.SmoothDamp(current, diameter, ref yVelocity, circleCrossSpeed);
 		if (!Mathf.Approximately (value, current)) {
 			current = value;
 			maskMaterial.SetFloat ("_Silder", current);
 		}
+	}
+
+	public void StartBeginnerGuide(){
+		this.gameObject.SetActive(true);
+		ShowTarget();
 	}
 
 	private void ShowTarget(){

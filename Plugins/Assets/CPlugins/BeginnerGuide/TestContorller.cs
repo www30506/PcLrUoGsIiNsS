@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TestContorller : MonoBehaviour {
+	[SerializeField]private BeginnerGuide beginnerGuide;
 
 	void Start () {
-		
+		beginnerGuide.StartBeginnerGuide();
 	}
 
 	void Update () {
