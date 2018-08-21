@@ -18,6 +18,14 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 	void Awake (){
 		canvas = GameObject.Find ("Canvas").GetComponent<Canvas> ();
+
+	}
+
+	void Start(){
+		for(int i=0; i<target.Length; i++){
+			target[i].gameObject.SetActive(false);
+		}
+
 		ShowTarget();
 	}
 
@@ -30,6 +38,13 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 	}
 
 	private void ShowTarget(){
+		if(targetIndex>0){
+			target[targetIndex-1].gameObject.SetActive(false);
+		}
+
+
+		target[targetIndex].gameObject.SetActive(true);
+
 		target[targetIndex].GetComponent<RectTransform>().GetWorldCorners (corners);
 		diameter = Vector2.Distance (WordToCanvasPos(canvas,corners [0]), WordToCanvasPos(canvas,corners [2])) / 2f;
 
@@ -42,7 +57,6 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 		center = new Vector4 (position.x,position.y,0f,0f);
 		maskMaterial = GetComponent<Image>().material;
-//		maskMaterial = maskImage.material;
 		maskMaterial.SetVector ("_Center", center);
 
 		(canvas.transform as RectTransform).GetWorldCorners (corners);
@@ -72,8 +86,11 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 	//监听点击
 	public void OnPointerClick(PointerEventData eventData){
+		if(eventData.selectedObject == null) return;
+
 		if(eventData.selectedObject.GetComponent<Button>().GetInstanceID() == target[targetIndex].GetInstanceID() && targetIndex < target.Length){
 			PassEvent(eventData,ExecuteEvents.pointerClickHandler);
+
 			targetIndex++;
 			if(targetIndex < target.Length){
 				ShowTarget();
