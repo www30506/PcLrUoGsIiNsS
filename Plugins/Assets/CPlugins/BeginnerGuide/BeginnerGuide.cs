@@ -5,8 +5,18 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHandler,IPointerUpHandler {
-	[SerializeField]private Button[] target;
+	[System.Serializable]public class BeginnerGuide_Item{
+		public Button button;
+		public float nextDelay;
+		public string TextKey;
+	}
+
+	[SerializeField]private int wordSpeed = 5;
+	[SerializeField]private float textStartDelay = 0.8f;
+	[SerializeField]private BeginnerGuide_Item[] items;
+	[SerializeField]private Text descriptionText;
 	[SerializeField]private float circleCrossSpeed = 0.2f;
+	[SerializeField]private GameObject maskObj;
 	private Material maskMaterial;
 	private Vector4 center;
 	private float diameter; // 直径
@@ -16,22 +26,51 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 	private Canvas canvas;
 	Vector3[] corners = new Vector3[4]; 
 
+	private string descriptionStr;
+	private bool changeText;
+	private float wordIntervalsTime;
+	private float tempTime;
+	private int textIndex;
+	private bool waiting = false;
+
 	void Awake (){
 		canvas = GameObject.Find ("Canvas").GetComponent<Canvas> ();
-		for(int i=0; i<target.Length; i++){
-			target[i].gameObject.SetActive(false);
+		for(int i=0; i<items.Length; i++){
+			items[i].button.gameObject.SetActive(false);
 		}
 	}
 
 	void Start(){
-		
+		wordIntervalsTime = 1/(float)wordSpeed;
 	}
 
 	void Update () {
+		CircleAnim();
+		ShowText();
+	}
+
+	private void CircleAnim(){
 		float value = Mathf.SmoothDamp(current, diameter, ref yVelocity, circleCrossSpeed);
 		if (!Mathf.Approximately (value, current)) {
 			current = value;
 			maskMaterial.SetFloat ("_Silder", current);
+		}
+	}
+
+	private void ShowText(){
+		if(changeText){
+			tempTime += Time.deltaTime;
+
+			if(tempTime > wordIntervalsTime){
+				tempTime -=wordIntervalsTime;
+				textIndex++;
+
+				descriptionText.text = descriptionStr.Substring(0,textIndex);
+
+				if(descriptionText.text == descriptionStr){
+					changeText = false;
+				}
+			}
 		}
 	}
 
@@ -42,13 +81,13 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 	private void ShowTarget(){
 		if(targetIndex>0){
-			target[targetIndex-1].gameObject.SetActive(false);
+			items[targetIndex-1].button.gameObject.SetActive(false);
 		}
 
 
-		target[targetIndex].gameObject.SetActive(true);
+		items[targetIndex].button.gameObject.SetActive(true);
 
-		target[targetIndex].GetComponent<RectTransform>().GetWorldCorners (corners);
+		items[targetIndex].button.GetComponent<RectTransform>().GetWorldCorners (corners);
 		diameter = Vector2.Distance (WordToCanvasPos(canvas,corners [0]), WordToCanvasPos(canvas,corners [2])) / 2f;
 
 		float x =corners [0].x + ((corners [3].x - corners [0].x) / 2f);
@@ -68,6 +107,14 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 		}
 
 		maskMaterial.SetFloat ("_Silder", current);
+
+		if(descriptionText != null){
+			descriptionStr = items[targetIndex].TextKey;
+			descriptionText.text = "";
+			changeText = true;
+			tempTime = 0 - textStartDelay;
+			textIndex =0;
+		}
 	}
 
 	Vector2 WordToCanvasPos(Canvas canvas,Vector3 world){
@@ -89,22 +136,39 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 	//监听点击
 	public void OnPointerClick(PointerEventData eventData){
-		if(eventData.selectedObject == null) return;
+		if(waiting) return;
 
-		if(eventData.selectedObject.GetComponent<Button>().GetInstanceID() == target[targetIndex].GetInstanceID() && targetIndex < target.Length){
+		StartCoroutine(IE_OnPointerClick(eventData));
+	}
+
+	IEnumerator IE_OnPointerClick(PointerEventData eventData){
+		if(eventData.selectedObject == null) yield break;
+
+		if(eventData.selectedObject.GetComponent<Button>().GetInstanceID() == items[targetIndex].button.GetInstanceID() && targetIndex < items.Length){
 			PassEvent(eventData,ExecuteEvents.pointerClickHandler);
 
+			if(items[targetIndex].nextDelay !=0){
+				waiting = true;
+				this.GetComponent<Image>().enabled = false;
+				descriptionText.text = "";
+				maskObj.SetActive(true);
+				yield return new WaitForSeconds(items[targetIndex].nextDelay);
+				this.GetComponent<Image>().enabled = true;
+				maskObj.SetActive(false);
+				waiting = false;
+			}
+				
 			targetIndex++;
-			if(targetIndex < target.Length){
+			if(targetIndex < items.Length){
 				ShowTarget();
 			}
 			else{
-				CloseTarget();
+				CloseBeginnerGuide();
 			}
 		}
 	}
 
-	private void CloseTarget(){
+	private void CloseBeginnerGuide(){
 		this.gameObject.SetActive(false);
 	}
 
