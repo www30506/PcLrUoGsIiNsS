@@ -1,4 +1,4 @@
-﻿Shader "UI/Default_Mask"
+﻿Shader "Custom/BeginnerGuideMask"
 {
 	Properties
 	{

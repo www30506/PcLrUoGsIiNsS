@@ -11,6 +11,7 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 		public string TextKey;
 	}
 
+	[SerializeField]private bool canSkipTip;
 	[SerializeField]private int wordSpeed = 5;
 	[SerializeField]private float textStartDelay = 0.8f;
 	[SerializeField]private BeginnerGuide_Item[] items;
@@ -35,9 +36,6 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 
 	void Awake (){
 		canvas = GameObject.Find ("Canvas").GetComponent<Canvas> ();
-		for(int i=0; i<items.Length; i++){
-			items[i].button.gameObject.SetActive(false);
-		}
 	}
 
 	void Start(){
@@ -80,13 +78,6 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 	}
 
 	private void ShowTarget(){
-		if(targetIndex>0){
-			items[targetIndex-1].button.gameObject.SetActive(false);
-		}
-
-
-		items[targetIndex].button.gameObject.SetActive(true);
-
 		items[targetIndex].button.GetComponent<RectTransform>().GetWorldCorners (corners);
 		diameter = Vector2.Distance (WordToCanvasPos(canvas,corners [0]), WordToCanvasPos(canvas,corners [2])) / 2f;
 
@@ -137,6 +128,7 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 	//监听点击
 	public void OnPointerClick(PointerEventData eventData){
 		if(waiting) return;
+		if(changeText && canSkipTip == false) return;
 
 		StartCoroutine(IE_OnPointerClick(eventData));
 	}
@@ -150,6 +142,7 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 			if(items[targetIndex].nextDelay !=0){
 				waiting = true;
 				this.GetComponent<Image>().enabled = false;
+				changeText = false;
 				descriptionText.text = "";
 				maskObj.SetActive(true);
 				yield return new WaitForSeconds(items[targetIndex].nextDelay);
