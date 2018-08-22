@@ -73,8 +73,10 @@ public class BeginnerGuide : MonoBehaviour,IPointerClickHandler ,IPointerDownHan
 	}
 
 	public void StartBeginnerGuide(){
-		this.gameObject.SetActive(true);
-		ShowTarget();
+		if(items.Length !=0){
+			this.gameObject.SetActive(true);
+			ShowTarget();
+		}
 	}
 
 	private void ShowTarget(){
