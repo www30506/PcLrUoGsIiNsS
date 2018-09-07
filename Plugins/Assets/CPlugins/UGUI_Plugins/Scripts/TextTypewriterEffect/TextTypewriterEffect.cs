@@ -11,11 +11,13 @@ public class TextTypewriterEffect : MonoBehaviour {
 	private Text m_text2;
 
 	private string changeString;
+	private string oldString;
 	private char[] changeChars;
 	private int nowNumber;
 	private float tempTime;
 	private float intervalTime;
 	private bool isChange = false;
+	private int tempIndex = 0;
 
 	void Awake(){
 		m_text = this.GetComponent<Text>();
@@ -44,7 +46,6 @@ public class TextTypewriterEffect : MonoBehaviour {
 		m_text2.resizeTextForBestFit = m_text.resizeTextForBestFit;
 		m_text2.color = m_text.color;
 		m_text2.raycastTarget = m_text.raycastTarget;
-//		m_text2.material = m_text.material;
 	}
 
 	void Start () {
@@ -52,9 +53,16 @@ public class TextTypewriterEffect : MonoBehaviour {
 	}
 
 	void Update () {
-		if(m_text.text != changeString){
+		if(m_text.text != oldString){
 			isChange = true;
 			changeString = m_text.text;
+			m_text.text += tempIndex;
+			oldString = m_text.text;
+			tempIndex++;
+			if(tempIndex>5) {
+				tempIndex = 0;
+			}
+
 			changeChars = changeString.ToCharArray();
 			nowNumber = 0;
 			m_text2.text = "";
