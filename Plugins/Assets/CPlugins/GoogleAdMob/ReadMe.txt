@@ -10,20 +10,16 @@ Assets -> Play Services Resolver -> Android Resolver -> Resolve
 
 
 【3】
-將CPlugins -> AdMob腳本匯入專案內
+將CPlugins -> GoogleAdMob -> AdMob.pref 放到最初始的場景
 
 
 【4】
-將GoogleAdMob.cs掛在最初始的場景
-
-
-【5】
 在GoogleAdMob.cs 將各平台的appId、rewardVideo_AdUnitId、Interstitial_AdUnitId
 輸入到對應的AdMobDatas
 PS：請不要更改AdMobDatas的platfrom資料
 
 
-【6】
+【5】
 獎勵型廣告
 展示呼叫ShowRewardedVideo()
 當廣告播放完畢會呼叫HandleRewardBasedVideoRewarded()可以將獲得東西的資料放在這邊
@@ -32,7 +28,7 @@ PS：這不是主執行緒 有些東西無法使用
 再從HandleRewardBasedVideoRewarded 去給定一個值來判斷是否獎勵成功
 
 
-【7】
+【6】
 插頁型廣告
 展示呼叫ShowInterstitialAds
 要執行的東西直接ShowInterstitialAds裡面就可以了

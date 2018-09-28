@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using System;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 
 public class GoogleAdMob : MonoBehaviour{
 	private int nowPlatform;
@@ -15,19 +14,24 @@ public class GoogleAdMob : MonoBehaviour{
 		public string appId;
 		public string rewardVideo_AdUnitId;
 		public string Interstitial_AdUnitId;
-		public string testDevice;
 
 		public AdMobData(Platform p_Platform){
 			platform = p_Platform;
 		}
 	}
 
-	[SerializeField]private AdMobData[] AdMobDatas = new AdMobData[]{new AdMobData(AdMobData.Platform.Android), new AdMobData(AdMobData.Platform.IOS)};
 	[SerializeField]private bool testMode = false;
+	[SerializeField]private AdMobData[] AdMobDatas = new AdMobData[]{new AdMobData(AdMobData.Platform.Android), new AdMobData(AdMobData.Platform.IOS)};
+
 	public static GoogleAdMob instance;
 
 	private RewardBasedVideoAd rewardBasedVideo;
 	private InterstitialAd interstitial;
+	private bool reloadInterstitial = false;
+	private bool reloadrewardVideo = false;
+	private float reloadTime = 30.0f;
+	private float tempTime;
+
 
 	void Awake(){
 		#if UNITY_EDITOR
@@ -66,18 +70,32 @@ public class GoogleAdMob : MonoBehaviour{
 		/*******************************/
 	}
 
+	void Update(){
+		tempTime += Time.deltaTime;
+		if (tempTime > reloadTime) {
+			tempTime = 0;
+			if (reloadInterstitial) {
+				reloadInterstitial = false;
+				RequestInterstitial ();
+			}
+
+			if (reloadrewardVideo) {
+				reloadrewardVideo = false;
+				RequestRewardBasedVideo ();
+			}
+		}
+	}
+
 	/*************************		獎勵廣告		*******************************/
 	private void RequestRewardBasedVideo(){
 		print("【獎勵廣告】建置");
 
-		if(testMode){
-			AdRequest request = new AdRequest.Builder().AddTestDevice(AdMobDatas[nowPlatform].testDevice).Build();
-			this.rewardBasedVideo.LoadAd(request, AdMobDatas[nowPlatform].rewardVideo_AdUnitId);
+		AdRequest.Builder _builder = new AdRequest.Builder();
+		if (testMode) {
+			_builder.AddTestDevice (AdCommon.DeviceIdForAdmob);
 		}
-		else{
-			AdRequest request = new AdRequest.Builder().Build();
-			this.rewardBasedVideo.LoadAd(request, AdMobDatas[nowPlatform].rewardVideo_AdUnitId);
-		}
+
+		this.rewardBasedVideo.LoadAd(_builder.Build(), AdMobDatas[nowPlatform].rewardVideo_AdUnitId);
 	}
 
 	private void HandleRewardBasedVideoLoaded(object sender, EventArgs args){
@@ -86,6 +104,7 @@ public class GoogleAdMob : MonoBehaviour{
 
 	private void HandleRewardBasedVideoFailedToLoad(object sender, AdFailedToLoadEventArgs args){
 		MonoBehaviour.print("【獎勵廣告】FailedToLoad : " + args.Message);
+		reloadrewardVideo = true;
 	}
 
 	private void HandleRewardBasedVideoOpened(object sender, EventArgs args){
@@ -110,6 +129,7 @@ public class GoogleAdMob : MonoBehaviour{
 	private void HandleRewardBasedVideoLeftApplication(object sender, EventArgs args){
 		MonoBehaviour.print("HandleRewardBasedVideoLeftApplication event received");
 	}
+
 	/****************************************************************************/
 
 
@@ -127,14 +147,12 @@ public class GoogleAdMob : MonoBehaviour{
 		interstitial.OnAdClosed += HandleOnAdClosed;
 		interstitial.OnAdLeavingApplication += HandleOnAdLeavingApplication;
 
-		if(testMode){
-			AdRequest request = new AdRequest.Builder().AddTestDevice(AdMobDatas[nowPlatform].testDevice).Build();
-			interstitial.LoadAd(request);
+		AdRequest.Builder _builder = new AdRequest.Builder();
+		if (testMode) {
+			_builder.AddTestDevice (AdCommon.DeviceIdForAdmob);
 		}
-		else{
-			AdRequest request = new AdRequest.Builder().Build();
-			interstitial.LoadAd(request);
-		}
+
+		interstitial.LoadAd(_builder.Build());
 	}
 
 	private void HandleOnAdLoaded(object sender, EventArgs args){
@@ -143,6 +161,7 @@ public class GoogleAdMob : MonoBehaviour{
 
 	private void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args){
 		MonoBehaviour.print("【插頁廣告】FailedToLoad : "+ args.Message);
+		reloadInterstitial = true;
 	}
 
 	private void HandleOnAdOpened(object sender, EventArgs args){
@@ -174,7 +193,6 @@ public class GoogleAdMob : MonoBehaviour{
 			print ("【獎勵廣告】 未準備好");
 		}
 	}
-
 
 	public static void ShowInterstitialAds(){
 		instance.M_ShowInterstitialAds ();
