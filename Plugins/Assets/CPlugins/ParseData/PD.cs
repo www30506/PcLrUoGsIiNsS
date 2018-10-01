@@ -26,6 +26,12 @@ public class PD : MonoBehaviour {
 	public static bool isLoadComplete = false;
 
 	void Awake () {
+		List<string> dirs = new List<string>();
+		List<string> names = new List<string>();
+		GetDirs(Application.streamingAssetsPath+"/Data", ref dirs, ref names);
+
+		SetFile(ref dirs, ref names);
+
 		#if UNITY_ANDROID && ! UNITY_EDITOR
 		StartCoroutine(Init_Android());
 		#else
@@ -33,20 +39,42 @@ public class PD : MonoBehaviour {
 		#endif
 	}
 
+	private static void GetDirs(string dirPath, ref List<string> dirs, ref List<string> names)
+	{
+		foreach (string path in Directory.GetFiles(dirPath))
+		{
+			//获取所有文件夹中包含后缀为 .prefab 的路径
+			if (System.IO.Path.GetExtension(path) == ".txt")
+			{
+				
+				string _name = Path.GetFileName(path.Substring(path.IndexOf("Data")));
+				string _path = Regex.Replace(path.Substring(path.IndexOf("Data")), _name, "") ;
+				Debug.LogError(_path);
+				Debug.LogError(_name);
 
-	//這個接口是給 EditorWindow建立使用
-	public void SetPDTxt(string[] p_name, string[] p_path){
-		m_file = new FileClass[p_path.Length];
+				_name = Regex.Replace(_name, ".txt","");
+				dirs.Add(_path);
+				names.Add(_name);
+			}
+		}
+
+		if (Directory.GetDirectories(dirPath).Length > 0)  //遍历所有文件夹
+		{
+			foreach (string path in Directory.GetDirectories(dirPath))
+			{
+				GetDirs(path, ref dirs, ref names);
+			}
+		}
+	}
+
+	private void SetFile(ref List<string> dirs, ref List<string> names){
+		m_file = new FileClass[dirs.Count];
+
 		for(int i=0; i< m_file.Length; i++){
 			m_file[i] = new FileClass();
-			m_file[i].m_name = p_name[i];
-			m_file[i].m_path = p_path[i];
+			m_file[i].m_path = dirs[i];
+			m_file[i].m_name = names[i];
 		}
-		#if UNITY_ANDROID && ! UNITY_EDITOR
-		StartCoroutine(Init_Android());
-		#else
-		Init();
-		#endif
 	}
 
 	IEnumerator Init_Android(){
@@ -57,7 +85,7 @@ public class PD : MonoBehaviour {
 
 		//DefineData
 		for (int i = 0; i < m_file.Length; i++) {
-			WWW _data = new WWW(Application.streamingAssetsPath+"/" + m_file[i].m_path + "/" + m_file[i].m_name + ".txt");
+			WWW _data = new WWW(Application.streamingAssetsPath+"/" + m_file[i].m_path + m_file[i].m_name + ".txt");
 			yield return _data;
 			DoParseDefineData(i, _data.text);
 		}
@@ -66,7 +94,7 @@ public class PD : MonoBehaviour {
 
 		//Data
 		for (int i = 0; i < m_file.Length; i++) {
-			WWW _data = new WWW(Application.streamingAssetsPath+"/" + m_file[i].m_path + "/" + m_file[i].m_name + ".txt");
+			WWW _data = new WWW(Application.streamingAssetsPath+"/" + m_file[i].m_path + m_file[i].m_name + ".txt");
 			yield return _data;
 			DoParse(i, _data.text);
 		}
@@ -83,7 +111,7 @@ public class PD : MonoBehaviour {
 
 		//DefineData
 		for (int i = 0; i < m_file.Length; i++) {
-			FileStream file = new FileStream(Application.streamingAssetsPath + "/" + m_file[i].m_path + "/" + m_file[i].m_name + ".txt", FileMode.Open, FileAccess.Read);
+			FileStream file = new FileStream(Application.streamingAssetsPath + "/" + m_file[i].m_path + m_file[i].m_name + ".txt", FileMode.Open, FileAccess.Read);
 			StreamReader sr = new StreamReader(file);
 			DoParseDefineData(i, sr.ReadToEnd());
 			file.Close();
@@ -94,7 +122,7 @@ public class PD : MonoBehaviour {
 
 		//Data
 		for (int i = 0; i < m_file.Length; i++) {
-			FileStream file = new FileStream(Application.streamingAssetsPath + "/" + m_file[i].m_path + "/" + m_file[i].m_name + ".txt", FileMode.Open, FileAccess.Read);
+			FileStream file = new FileStream(Application.streamingAssetsPath + "/" + m_file[i].m_path + m_file[i].m_name + ".txt", FileMode.Open, FileAccess.Read);
 			StreamReader sr = new StreamReader(file);
 			string _ss = sr.ReadToEnd ();
 			DoParse(i, _ss);
@@ -128,11 +156,11 @@ public class PD : MonoBehaviour {
 			}
 		}
 
-		if(File.Exists(Application.streamingAssetsPath + "/" + _path + "/" + _name + ".txt")){
-			File.Delete(Application.streamingAssetsPath + "/" + _path + "/" + _name + ".txt");
+		if(File.Exists(Application.streamingAssetsPath + "/" + _path + _name + ".txt")){
+			File.Delete(Application.streamingAssetsPath + "/" + _path + _name + ".txt");
 		}
 
-		FileStream file = new FileStream(Application.streamingAssetsPath + "/" + _path + "/" + _name + ".txt", FileMode.Create, FileAccess.Write);
+		FileStream file = new FileStream(Application.streamingAssetsPath + "/" + _path + _name + ".txt", FileMode.Create, FileAccess.Write);
 		StreamWriter sw = new StreamWriter(file, Encoding.UTF8);
 		//寫入Define
 		foreach(string _key in defineData[p_key].Keys){
