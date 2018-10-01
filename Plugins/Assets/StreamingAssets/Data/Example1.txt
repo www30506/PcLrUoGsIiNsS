@@ -1,6 +1,5 @@
 ﻿[define]name	編號	名稱	分數	目標數
 [define]type	int	string	int	string
 key	ID	Name	Score	Description
-1	1	羅	10	奇怪的東西
-2	2	希司	20	奇怪的東西II
-3	3	雙	300	a1
+1	1	克d羅	120	奇怪的東西
+2	2	希d司	220	奇怪的東西II

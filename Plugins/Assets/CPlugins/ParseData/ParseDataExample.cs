@@ -7,8 +7,14 @@ public class ParseDataExample : MonoBehaviour {
 	void Start () {
 		print("====  讀取資料 ====");
 
+		print("【資料表1】");
 		for(int i =0; i< PD.DATA ["Example"].Count; i++){
 			print(PD.DATA ["Example"][(i+1).ToString()]["Name"] + " , " +  PD.DATA ["Example"][(i+1).ToString()]["Score"] + " , " +  PD.DATA ["Example"][(i+1).ToString()]["Description"]);
+		}
+
+		print("【資料表2】");
+		for(int i =0; i< PD.DATA ["Example1"].Count; i++){
+			print(PD.DATA ["Example1"][(i+1).ToString()]["Name"] + " , " +  PD.DATA ["Example"][(i+1).ToString()]["Score"] + " , " +  PD.DATA ["Example"][(i+1).ToString()]["Description"]);
 		}
 
 		print("====  寫入資料 ====");
