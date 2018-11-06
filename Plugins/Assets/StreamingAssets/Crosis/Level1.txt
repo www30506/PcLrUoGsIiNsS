@@ -1,0 +1,7 @@
+﻿Key	English	TraditionalChinese	SimplifiedChinese
+Level1_Test1	Test1	測試1	测试1
+Level1_Test2	Test2	測試2	测试2
+Level1_Test3	Test3	測試3	测试3
+Level1_Test4	Test4	測試4	测试4
+Level1_Test5	Test5	測試5	测试5
+Level1_Test6	Test6	測試6	测试6
