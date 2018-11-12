@@ -1,0 +1,15 @@
+ManifestFileVersion: 0
+CRC: 1718615483
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 01464738aa7ee570611c217e55372f35
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/AssetBundleSample/Assets/Tanks/Scenes/TanksExample.unity
+Dependencies:
+- D:/Project/CPlugins/Plugins/Assets/StreamingAssets/Android/tanks-albedo.normal-hd

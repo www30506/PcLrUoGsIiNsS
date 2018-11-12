@@ -1,0 +1,15 @@
+ManifestFileVersion: 0
+CRC: 3269578081
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 46530cd3b4a11540b6c511c65f3b30de
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/AssetBundleSample/Assets/Variants/VariantScene.unity
+Dependencies:
+- D:/Project/CPlugins/Plugins/Assets/StreamingAssets/Android/variants/myassets.hd

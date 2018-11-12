@@ -1,0 +1,15 @@
+ManifestFileVersion: 0
+CRC: 619245457
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ac907aa89a0b795b9de693ebc9016206
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/AssetBundleSample/Assets/TestScene.unity
+Dependencies:
+- D:/Project/CPlugins/Plugins/Assets/StreamingAssets/Android/material-bundle
