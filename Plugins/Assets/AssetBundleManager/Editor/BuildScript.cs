@@ -53,13 +53,54 @@ namespace AssetBundles
             if (builds == null || builds.Length == 0)
             {
                 //@TODO: use append hash... (Make sure pipeline works correctly with it.)
-                BuildPipeline.BuildAssetBundles(outputPath, options, EditorUserBuildSettings.activeBuildTarget);
+				BuildPipeline.BuildAssetBundles(outputPath, options, EditorUserBuildSettings.activeBuildTarget);
             }
             else
             {
                 BuildPipeline.BuildAssetBundles(outputPath, builds, options, EditorUserBuildSettings.activeBuildTarget);
             }
         }
+
+		public static void BuildAssetBundlesLocal(){
+			BuildAssetBundlesLocal(null);
+		}
+
+		public static void BuildAssetBundlesLocal(AssetBundleBuild[] builds)
+		{
+			// Choose the output path according to the build target.
+			string outputPath = CreateAssetBundleDirectory();
+			string path = Application.streamingAssetsPath + "/Android";
+			var options = BuildAssetBundleOptions.None;
+
+			if(!Directory.Exists(path)){
+				Directory.CreateDirectory(path);
+			}
+
+			bool shouldCheckODR = EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS;
+			#if UNITY_TVOS
+			shouldCheckODR |= EditorUserBuildSettings.activeBuildTarget == BuildTarget.tvOS;
+			#endif
+			if (shouldCheckODR)
+			{
+				#if ENABLE_IOS_ON_DEMAND_RESOURCES
+				if (PlayerSettings.iOS.useOnDemandResources)
+				options |= BuildAssetBundleOptions.UncompressedAssetBundle;
+				#endif
+				#if ENABLE_IOS_APP_SLICING
+				options |= BuildAssetBundleOptions.UncompressedAssetBundle;
+				#endif
+			}
+
+			if (builds == null || builds.Length == 0)
+			{
+				//@TODO: use append hash... (Make sure pipeline works correctly with it.)
+				BuildPipeline.BuildAssetBundles(path, options, EditorUserBuildSettings.activeBuildTarget);
+			}
+			else
+			{
+				BuildPipeline.BuildAssetBundles(path, builds, options, EditorUserBuildSettings.activeBuildTarget);
+			}
+		}
 
         public static void WriteServerURL()
         {
