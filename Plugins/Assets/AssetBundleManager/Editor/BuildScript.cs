@@ -33,7 +33,7 @@ namespace AssetBundles
             // Choose the output path according to the build target.
             string outputPath = CreateAssetBundleDirectory();
 
-            var options = BuildAssetBundleOptions.None;
+			var options = BuildAssetBundleOptions.None;
 
             bool shouldCheckODR = EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS;
 #if UNITY_TVOS

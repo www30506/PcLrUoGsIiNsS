@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3445534793
+CRC: 274840585
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4340908dd3800e56baffd4679a531a0f
+    Hash: 796de8a6cd35f38f2a12758b3db6adae
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 165a78b0731a3e14da5dfa8304dfc998
+    Hash: 4e4037536d240f9eabed2a302c18815c
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -14,8 +14,6 @@ ClassTypes:
 - Class: 4
   Script: {instanceID: 0}
 - Class: 21
-  Script: {instanceID: 0}
-- Class: 28
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
@@ -25,4 +23,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Crosis/TestAssetsBundle/Sprite.prefab
-Dependencies: []
+Dependencies:
+- D:/Project/CPlugins/Plugins/Assets/StreamingAssets/Android/variants/myassets.hd

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1990353415
+CRC: 3401374139
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 61deaab7f4a7b1ed6b5118a706b7837a
+    Hash: 6c0914ce41364b5dc472cd89c8d0a3a8
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 73209ebaceed185540cd0785fa412317
+    Hash: 4c438b52cef672421929500d294e2380
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -16,6 +16,8 @@ ClassTypes:
 - Class: 21
   Script: {instanceID: 0}
 - Class: 23
+  Script: {instanceID: 0}
+- Class: 28
   Script: {instanceID: 0}
 - Class: 33
   Script: {instanceID: 0}
@@ -27,7 +29,10 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 136
   Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
 Assets:
 - Assets/Crosis/TestAssetsBundle/Capsule1.prefab
+- Assets/Crosis/TestAssetsBundle/mm.png
 - Assets/Crosis/TestAssetsBundle/Sphere.prefab
 Dependencies: []

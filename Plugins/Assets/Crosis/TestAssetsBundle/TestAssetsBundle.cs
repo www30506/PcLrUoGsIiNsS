@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using AssetBundles;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TestAssetsBundle : MonoBehaviour {
 	[SerializeField]private Transform parent;
 	private string assetBundleName = "level1";
 	private string assetName = "Cube";
+	[SerializeField]private Image image;
 
 	void Start () {
 		
@@ -63,7 +65,7 @@ public class TestAssetsBundle : MonoBehaviour {
 	}
 
 	IEnumerator IE_Load(){
-		AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, "Cube", typeof(GameObject));
+		AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync("level2", "Sphere", typeof(GameObject));
 		if (request == null)
 			yield break;
 		yield return StartCoroutine(request);
@@ -88,6 +90,22 @@ public class TestAssetsBundle : MonoBehaviour {
 
 		if (prefab != null)
 			GameObject.Instantiate(prefab);
+	}
+
+	public void LoadTexture(){
+		StartCoroutine(IE_LoadTexture());
+	}
+
+	IEnumerator IE_LoadTexture(){
+		AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync("level2", "mm", typeof(Texture2D));
+		if (request == null)
+			yield break;
+		yield return StartCoroutine(request);
+		Texture2D prefab = request.GetAsset<Texture2D>();
+
+		if (prefab != null){
+			image.sprite = Sprite.Create(prefab, new Rect(0.0f, 0.0f, prefab.width, prefab.height), new Vector2(0.5f, 0.5f));
+		}
 	}
 
 	public void OnResetScene(){
@@ -122,7 +140,7 @@ ORD
 <<狀態>>
 樓層狀態	Floor	>	One or Two or Null(代表在Two)	
 梯子狀態	Ladder	>	Null Or PutDown
-裝置狀態	Device	>	
+裝置狀態	Device	>	0~15 二禁制判斷
 木盒子狀態	WoodenBox	>	Open or Null
 
 	StartText	我是奈特，原本在城堡裡面生活的人....在我沉靜在回憶的時候城堡傳來巨大的搖晃...看來我還是先離開城堡吧。
@@ -192,17 +210,21 @@ ORD
 	我	檢視	裝飾(盾)	盾造型的裝飾品，大概一個手掌大小，做得十分精緻。
 	我	檢視	裝飾(旗子)	旗子造型的裝飾品，大概一個手掌大小，做得十分精緻。
 
-	裝飾(劍)	放入	xx	(刪除 【裝飾(劍)】)
-	裝飾(弓)	放入	xx	(刪除 【裝飾(弓)】)
-	裝飾(盾)	放入	xx	(刪除 【裝飾(盾)】)
-	裝飾(旗子)	放入	xx	(刪除 【裝飾(旗子)】)
+	裝飾(劍)	放入	裝置	(刪除【裝飾(劍)】) (Device +1)
+	裝飾(弓)	放入	裝置	(刪除【裝飾(弓)】)	(Device +2)
+	裝飾(盾)	放入	裝置	(刪除【裝飾(盾)】)	(Device +4)
+	裝飾(旗子)	放入	裝置	(刪除【裝飾(旗子)】)(Device +8)
 
 	我	檢視	櫃子	(獲得 【裝飾(旗子) 【裝飾(盾)】) 櫃子上面放著許多獎盃，是過去家族在騎士比賽得到的，旁邊有兩個個精緻的【裝飾品】和一把【鑰匙】。
 
 	我	檢視	鑰匙	銅製的鑰匙，但是樣子挺奇怪的，最前方是一個星型。
 	
-	我	檢視	裝置	畫面的四個角有著不同顏色，xxxxx
+	我	檢視	裝置	上面有四個洞，好像可以放東西進去，中間有個畫面但是全黑的，旁邊還有個電源開關。xxx
 
+	我	開啟	裝置	(判斷 Device )
+						15	>	開啟圖形密碼。
+						其他	>	我按了按鈕但是畫面沒有任何顯示。
+						
 	我	完成	裝置	(觸發 故事結局)	裝置發出了綠色的光芒，此時右手邊的大門緩緩開起。
 	
 	我	檢視	大門	大門被鎖著，也沒有看到可以手把之類的東西，似乎要靠其他的東西來打開。
