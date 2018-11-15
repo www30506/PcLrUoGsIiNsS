@@ -38,6 +38,4 @@ public class Test_MainPage : Page_Base {
 	public void OnToSecondPage(){
 		PageManerger.ChangePage (PageType.Test_SecondPage);
 	}
-
-
 }

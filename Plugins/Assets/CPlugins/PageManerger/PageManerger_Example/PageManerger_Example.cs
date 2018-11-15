@@ -5,7 +5,6 @@ using UnityEngine;
 public class PageManerger_Example : MonoBehaviour {
 	
 	IEnumerator Start () {
-		Debug.logger.logEnabled = false;
 		PageManerger.CloseAllPage ();
 		yield return null;
 		PageManerger.ChangePage (PageType.Test_MainPage);

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public enum PageType{Test_MainPage, Test_SecondPage}
 public class PageManerger : MonoBehaviour {
-	
+	private enum PageOperatingType{Change,Open};
+
 	[Header("開啟和關閉頁面是否同時執行")]
 	[SerializeField]private bool isAnimSynchronize = true;
 	public static PageManerger instance;
 	private List<Page_Base> pageList = new List<Page_Base>(); 
 	[SerializeField]private List<PageType> pageTypeList = new List<PageType> ();
+	[SerializeField]private List<PageOperatingType> pageOperatingTypeList = new List<PageOperatingType>();
 	private Transform canvas;
 	private Page_Base[] allPages;
 	private bool isWork = false;
@@ -32,6 +34,7 @@ public class PageManerger : MonoBehaviour {
 	/// </summary>
 	public static void ChangePage(PageType p_type){
 		PageManerger.instance.M_ChangePage (p_type);
+		PageManerger.instance.pageOperatingTypeList.Add(PageOperatingType.Change);
 	}
 
 	public void M_ChangePage(PageType p_type){
@@ -175,10 +178,12 @@ public class PageManerger : MonoBehaviour {
 		pageList.RemoveAt (pageList.Count - 1);
 		pageTypeList.RemoveAt (pageTypeList.Count - 1);
 
-		if (pageTypeList.Count > 0) {
-			yield return StartCoroutine(OpenTargetPage (pageTypeList [pageTypeList.Count - 1]));
+		if(pageOperatingTypeList[pageOperatingTypeList.Count-1] == PageOperatingType.Change){
+			if (pageTypeList.Count > 0) {
+				yield return StartCoroutine(OpenTargetPage (pageTypeList [pageTypeList.Count - 1]));
+			}
 		}
-
+		pageOperatingTypeList.RemoveAt(pageOperatingTypeList.Count-1);
 		isWork = false;
 	}
 
@@ -187,6 +192,7 @@ public class PageManerger : MonoBehaviour {
 	/// </summary>
 	public static void OpenPage(PageType p_type){
 		PageManerger.instance.M_OpenPage (p_type);
+		PageManerger.instance.pageOperatingTypeList.Add(PageOperatingType.Open);
 	}
 
 	public void M_OpenPage(PageType p_type){
