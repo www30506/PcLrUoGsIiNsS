@@ -49,8 +49,6 @@ public class PD : MonoBehaviour {
 				
 				string _name = Path.GetFileName(path.Substring(path.IndexOf("Data")));
 				string _path = Regex.Replace(path.Substring(path.IndexOf("Data")), _name, "") ;
-				Debug.LogError(_path);
-				Debug.LogError(_name);
 
 				_name = Regex.Replace(_name, ".txt","");
 				dirs.Add(_path);
