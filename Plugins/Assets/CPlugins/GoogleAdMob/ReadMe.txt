@@ -2,7 +2,7 @@
 匯入AdMob插件
 https://github.com/googleads/googleads-mobile-unity/releases/tag/v3.15.1
 ->googleMobileAds.unitypackage
-
+(git上已經抓進來了 但有可能有更新還是去上面的網址看一下)
 
 【2】
 在unity匯入安桌需要的額外插件
@@ -30,5 +30,10 @@ PS：這不是主執行緒 有些東西無法使用
 
 【6】
 插頁型廣告
-展示呼叫ShowInterstitialAds
+展示呼叫ShowInterstitialAds()
+要執行的東西直接ShowInterstitialAds裡面就可以了
+
+【7】
+橫幅廣告
+展示呼叫ShowBanner()
 要執行的東西直接ShowInterstitialAds裡面就可以了
